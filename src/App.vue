@@ -1,9 +1,10 @@
 <template lang="pug">
   #app
-    div ДОБРО ПОЖАЛОВАТЬ
+    router-view
 </template>
 
 <script>
+
 export default {
   name: 'app',
   data () {
@@ -13,6 +14,16 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+html {
+  font-family: Georgia;
+}
 
+body {
+  margin: 0;
+}
+
+html, body, #app {
+  height: 100%;
+}
 </style>
