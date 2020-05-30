@@ -4,12 +4,13 @@
       img(src="../images/auth/google-logo.svg")
     google-login(:params="params" :onSuccess="onSuccess" :onFailure="onFailure")
       | Sign in with Google
-    //google-login(:params="params" :logoutButton="true" :onSuccess="onSuccess" :onFailure="onFailure")
+    // google-login(:params="params" :logoutButton="true" :onSuccess="onSuccess" :onFailure="onFailure")
 </template>
 
 <script>
 import config from '#/config'
 import GoogleLogin from 'vue-google-login'
+import auth from '@/auth'
 
 export default {
   name: 'Login',
