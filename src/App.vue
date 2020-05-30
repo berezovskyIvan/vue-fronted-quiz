@@ -16,7 +16,7 @@ export default {
 
 <style lang="scss">
 html {
-  font-family: Georgia;
+  font-family: sans-serif;
 }
 
 body {
