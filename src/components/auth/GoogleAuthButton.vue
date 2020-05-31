@@ -69,7 +69,6 @@
 
   .login-button {
     display: flex;
-    // width: 300px;
     height: 50px;
 
     &__icon {
