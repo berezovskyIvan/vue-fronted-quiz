@@ -15,15 +15,15 @@ export default {
 </script>
 
 <style lang="scss">
-html {
-  font-family: sans-serif;
-}
+  html {
+    font-family: sans-serif;
+  }
 
-body {
-  margin: 0;
-}
+  body {
+    margin: 0;
+  }
 
-html, body, #app {
-  height: 100%;
-}
+  html, body, #app {
+    height: 100%;
+  }
 </style>

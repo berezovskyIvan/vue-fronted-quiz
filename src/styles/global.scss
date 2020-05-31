@@ -1,3 +1,6 @@
+$color-white: #fef9ff;
+$color-blue: #4285f5;
+
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -13,6 +16,3 @@
   display: flex;
   justify-content: center;
 }
-
-$color-white: #fef9ff;
-$color-blue: #4285f5;

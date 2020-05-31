@@ -3,14 +3,14 @@
 </template>
 
 <script>
-export default {
-  name: 'PageNotFound'
-}
+  export default {
+    name: 'PageNotFound'
+  }
 </script>
 
 <style lang="scss" scoped>
-img {
-  width: 100%;
-  height: 100%;
-}
+  img {
+    width: 100%;
+    height: 100%;
+  }
 </style>

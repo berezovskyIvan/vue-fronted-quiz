@@ -4,19 +4,19 @@
 </template>
 
 <script>
-export default {
-  name: 'MainPage'
-}
+  export default {
+    name: 'MainPage'
+  }
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global';
+  @import '../styles/global';
 
-.main-page {
-  @include flex-center;
+  .main-page {
+    @include flex-center;
 
-  h1 {
-    font-size: 30px;
+    h1 {
+      font-size: 30px;
+    }
   }
-}
 </style>

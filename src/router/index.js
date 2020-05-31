@@ -16,11 +16,6 @@ export default new VueRouter({
       component: MainPage
     },
     {
-      name: 'page-not-found',
-      path: '*',
-      component: PageNotFound
-    },
-    {
       name: 'login',
       path: '/login',
       component: Login
@@ -28,7 +23,15 @@ export default new VueRouter({
     {
       name: 'dashboard',
       path: '/dashboard',
+      meta: {
+        requiredAuth: true
+      },
       component: Dashboard
-    }
+    },
+    {
+      name: 'page-not-found',
+      path: '*',
+      component: PageNotFound
+    },
   ]
 })

@@ -1,19 +1,35 @@
 <template lang="pug">
-  .dashboard
-    h1 Панель администрирования
+  .dashboard(v-if="showPage")
+    h1(class="dashboard__title") Панель администрирования
+    google-auth-button(class="dashboard__logout-button")
 </template>
 
 <script>
-export default {
-  name: 'Dashboard'
-}
+  import AuthMixin from '@/mixins/auth'
+  import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
+
+  export default {
+    name: 'Dashboard',
+    mixins: [AuthMixin],
+    components: {
+      GoogleAuthButton
+    }
+  }
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global';
+  @import '../styles/global';
 
-h1 {
-  @include flex-center;
-  font-size: 30px;
-}
+  .dashboard {
+    &__title {
+      @include flex-center;
+      font-size: 30px;
+    }
+
+    &__logout-button {
+      position: absolute;
+      right: 50px;
+      top: 20px;
+    }
+  }
 </style>
