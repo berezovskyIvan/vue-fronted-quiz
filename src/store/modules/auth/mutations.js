@@ -1,10 +1,10 @@
 import types from './types'
 
 export default {
-  [types.updateCheckedAuthStatus] (state, val) {
-    state.wasCheckedAuthStatus = val
+  [types.updateCheckedStatus] (state, val) {
+    state.wasCheckedStatus = val
   },
-  [types.updateAuthInfo] (state, obj) {
+  [types.updateInfo] (state, obj) {
     state.isSignedIn = obj.isSignedIn
     state.currentUser = obj.currentUser
   }

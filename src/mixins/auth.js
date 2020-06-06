@@ -2,9 +2,14 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'AuthMixin',
+  data () {
+    return {
+      loading: false
+    }
+  },
   computed: {
     ...mapState({
-      wasCheckedAuthStatus: state => state.auth.wasCheckedAuthStatus,
+      wasCheckedAuthStatus: state => state.auth.wasCheckedStatus,
       isSignedIn: state => state.auth.isSignedIn
     }),
     requiredAuth () {
@@ -21,6 +26,7 @@ export default {
   watch: {
     wasCheckedAuthStatus (val) {
       if (val) {
+        this.loading = false
         this.checkAuth()
       }
     }
@@ -30,6 +36,11 @@ export default {
       if (this.requiredAuth && !this.isSignedIn) {
         this.$router.push({ name: 'main' })
       }
+    }
+  },
+  created () {
+    if (!this.wasCheckedAuthStatus) {
+      this.loading = true
     }
   }
 }

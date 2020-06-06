@@ -27,7 +27,7 @@
     },
     computed: {
       ...mapState({
-        wasCheckedAuthStatus: state => state.auth.wasCheckedAuthStatus,
+        wasCheckedAuthStatus: state => state.auth.wasCheckedStatus,
         isSignedIn: state => state.auth.isSignedIn
       }),
       googleLoginButtonText () {
@@ -53,7 +53,7 @@
 
         const routeName = currentUser ? 'dashboard' : 'main'
 
-        this.$store.dispatch('auth/updateCheckedAuthStatus', true)
+        this.$store.dispatch('auth/updateCheckedStatus', true)
         this.$store.dispatch('auth/updateAuthInfo', authInfo)
         this.$router.push({ name: routeName })
       },
@@ -65,7 +65,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../styles/global';
+  @import '~s/global';
 
   .login-button {
     display: flex;

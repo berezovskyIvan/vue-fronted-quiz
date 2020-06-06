@@ -1,5 +1,5 @@
 export default {
-  wasCheckedAuthStatus: false,
+  wasCheckedStatus: false,
   isSignedIn: false,
   currentUser: {
     Ea: '',

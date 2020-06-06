@@ -10,10 +10,10 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../styles/global';
+  @import '~s/global';
 
   .main-page {
-    @include flex-center;
+    @include justify-center;
 
     h1 {
       font-size: 30px;
