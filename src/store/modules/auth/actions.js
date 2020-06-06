@@ -1,10 +1,10 @@
 import types from './types'
 
 export default {
-  [types.updateCheckedAuthStatus] ({ commit }, val) {
-    commit(types.updateCheckedAuthStatus, val)
+  [types.updateCheckedStatus] ({ commit }, val) {
+    commit(types.updateCheckedStatus, val)
   },
-  [types.updateAuthInfo] ({ commit }, obj) {
-    commit(types.updateAuthInfo, obj)
+  [types.updateInfo] ({ commit }, obj) {
+    commit(types.updateInfo, obj)
   }
 }

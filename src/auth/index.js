@@ -13,8 +13,8 @@ function getAuthInfo ($event) {
     currentUser: $event.currentUser.get()
   }
 
-  store.dispatch('auth/updateCheckedAuthStatus', true)
-  store.dispatch('auth/updateAuthInfo', authInfo)
+  store.dispatch('auth/updateCheckedStatus', true)
+  store.dispatch('auth/updateInfo', authInfo)
 }
 
 Vue.GoogleAuth.then(getAuthInfo)

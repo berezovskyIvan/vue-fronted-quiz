@@ -1,6 +1,6 @@
 const typeName = 'auth/'
 
 export default {
-  updateCheckedAuthStatus: typeName + 'updateCheckedAuthStatus',
-  updateAuthInfo: typeName + 'updateAuthInfo'
+  updateCheckedStatus: typeName + 'updateCheckedStatus',
+  updateInfo: typeName + 'updateInfo'
 }
