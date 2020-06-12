@@ -7,7 +7,16 @@ import router from '@/router'
 import store from '@/store'
 
 /*
-  google auth module
+  babel-polyfill
+ */
+import 'babel-polyfill'
+
+/*
+  axios configs
+ */
+import '@/axios'
+/*
+  google auth
  */
 import '@/auth'
 

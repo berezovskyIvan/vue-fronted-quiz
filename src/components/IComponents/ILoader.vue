@@ -1,16 +1,43 @@
 <template lang="pug">
-  img.i-loader(src="../../images/components/loader.gif")
+  img(src="../../images/components/loader.gif" :style="style")
 </template>
 
 <script>
+  import { getStr, getNumeric } from '@/utlis'
+
   export default {
-    name: 'ILoader'
+    name: 'ILoader',
+    props: {
+      height: {
+        type: [Number, String],
+        required: false,
+        default: 150
+      },
+      width: {
+        type: [Number, String],
+        required: false,
+        default: 150
+      },
+    },
+    computed: {
+      strHeight () {
+        return getStr(this.height)
+      },
+      strWidth () {
+        return getStr(this.width)
+      },
+      numberHeight () {
+        return getNumeric(this.height)
+      },
+      numberWidth () {
+        return getNumeric(this.width)
+      },
+      style () {
+        return {
+          height: this.strHeight,
+          width: this.strWidth
+        }
+      }
+    }
   }
 </script>
-
-<style lang="scss" scoped>
-  .i-loader {
-    height: 150px;
-    width: 150px;
-  }
-</style>

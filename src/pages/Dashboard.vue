@@ -14,6 +14,7 @@
             background-color="#f5f5f5"
             @click="openModal"
           )
+        my-quizzes
 </template>
 
 <script>
@@ -21,6 +22,7 @@
   import ILoader from '@/components/IComponents/ILoader'
   import IButton from "@/components/IComponents/IButton"
   import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
+  import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
   import TestEl from '@/pages/Dashboard/TestEl'
 
   export default {
@@ -29,6 +31,7 @@
     components: {
       ILoader,
       IButton,
+      MyQuizzes,
       GoogleAuthButton
     },
     data () {

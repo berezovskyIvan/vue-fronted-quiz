@@ -5,6 +5,7 @@
     :style="style"
     @load="successLoad = true"
     @error="errorLoad = true"
+    @click="$event => $emit('click', $event)"
   )
 </template>
 

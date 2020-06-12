@@ -9,7 +9,7 @@ import { mapState } from 'vuex'
 import IModalWindow from '@/components/IComponents/IModalWindow'
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
     IModalWindow
   },
@@ -17,6 +17,9 @@ export default {
     ...mapState({
       modalWindow: state => state.modal
     })
+  },
+  beforeMount () {
+    this.$store.dispatch('quiz/get')
   }
 }
 </script>
