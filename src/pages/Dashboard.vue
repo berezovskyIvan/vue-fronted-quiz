@@ -8,12 +8,7 @@
           h1.dashboard__content__title__value Панель администрирования
           google-auth-button.dashboard__content__title__logout-button
         .dashboard__content__body
-          i-button.dashboard__content__body__test-el-button(
-            value="Создать тест"
-            height="50px"
-            background-color="#f5f5f5"
-            @click="openModal"
-          )
+          i-button.dashboard__content__body__test-el-button(value="Создать тест" height="50px" background-color="#f5f5f5" @click="openModal")
         my-quizzes
 </template>
 
@@ -44,7 +39,6 @@
         const obj = {
           isOpen: true,
           width: 700,
-          height: 400,
           component: TestEl
         }
 

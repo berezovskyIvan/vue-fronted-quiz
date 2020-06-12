@@ -1,11 +1,6 @@
 <template lang="pug">
-  div.i-input(:style="style")
-    input(
-      :value="value"
-      ref="input"
-      :placeholder="placeholder"
-      @input="input"
-    )
+  .i-input(:style="style")
+    input(:value="value" ref="input" :placeholder="placeholder" @input="input")
 </template>
 
 <script>
@@ -72,21 +67,19 @@
 
   .i-input {
     @include flex-center;
-    box-sizing: content-box;
+    box-sizing: border-box;
     margin: 5px;
     border-radius: 8px;
-    border: 1px solid $color-silver;
 
     input {
-      box-sizing: border-box;
-      height: 99%;
-      width: 99%;
+      height: 100%;
+      width: 100%;
       padding-left: 10px;
       padding-right: 10px;
       outline: none;
-      border: none;
       border-radius: inherit;
       font-size: 16px;
+      border: 1px solid $color-silver;
     }
   }
 </style>
