@@ -39,6 +39,7 @@
         const obj = {
           isOpen: true,
           width: 700,
+          height: 250,
           component: TestEl
         }
 

@@ -126,7 +126,6 @@
       }
     },
     mounted () {
-      //https://docs.google.com/spreadsheets/d/1RWwzNjm-DBrulgTeu9-HBxSz9hIepXrCy67g3mgAG_Y/edit#gid=1113172195
       if (this.modal.oldData.description && this.modal.oldData.url) {
         this.description.model = this.modal.oldData.description
         this.gslUrl.model = this.modal.oldData.url

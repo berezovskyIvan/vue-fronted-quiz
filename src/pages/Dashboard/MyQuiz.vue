@@ -4,7 +4,7 @@
     template(v-else)
       .my-quiz__icons
         i-svg-icon(icon="bin", @click="deleteQuiz")
-        i-svg-icon(icon="edit" @click="editQuiz")
+        i-svg-icon(icon="edit" @click="updateQuiz")
       .my-quizzes__el__attr
         span.my-quiz__attr__title Описание
         span.my-quiz__attr__value {{ item.description }}
@@ -70,11 +70,11 @@
           this.loading = false
         })
       },
-      editQuiz () {
+      updateQuiz () {
         const obj = {
           isOpen: true,
           width: 700,
-          height: 400,
+          height: 250,
           component: TestEl,
           oldData: {
             description: this.item.description,
