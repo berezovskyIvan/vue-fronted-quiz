@@ -79,8 +79,8 @@
 
     input {
       box-sizing: border-box;
-      height: 100%;
-      width: 100%;
+      height: 99%;
+      width: 99%;
       padding-left: 10px;
       padding-right: 10px;
       outline: none;

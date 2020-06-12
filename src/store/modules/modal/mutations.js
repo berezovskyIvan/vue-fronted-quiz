@@ -5,7 +5,11 @@ const defaultObj = {
   isOpen: false,
   component: null,
   width: null,
-  height: null
+  height: null,
+  oldData: {
+    description: '',
+    url: ''
+  }
 }
 
 export default {

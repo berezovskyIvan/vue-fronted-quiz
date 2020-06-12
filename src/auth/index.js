@@ -4,7 +4,8 @@ import { LoaderPlugin } from 'vue-google-login'
 import store from '@/store'
 
 Vue.use(LoaderPlugin, {
-  client_id: config.google_client_id
+  client_id: config.google_client_id,
+  scope: 'https://www.googleapis.com/auth/spreadsheets'
 })
 
 function getAuthInfo ($event) {

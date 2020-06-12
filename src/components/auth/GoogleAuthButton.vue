@@ -45,20 +45,17 @@
             wc: {}
           }
         }
-
         if (currentUser) {
           authInfo.isSignedIn = true
           authInfo.currentUser = currentUser
         }
-
         const routeName = currentUser ? 'dashboard' : 'main'
-
         this.$store.dispatch('auth/updateCheckedStatus', true)
         this.$store.dispatch('auth/updateAuthInfo', authInfo)
         this.$router.push({ name: routeName })
       },
       onFailure (error) {
-        console.error('Auth error: ', error)
+        console.error(error)
       }
     }
   }
@@ -66,24 +63,20 @@
 
 <style lang="scss" scoped>
   @import '~s/global';
-
   .login-button {
     display: flex;
     height: 50px;
-
     &__icon {
       @include flex-center;
       width: 50px;
       border: 2px solid $color-blue;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
-
       img {
         width: 25px;
         height: 25px;
       }
     }
-
     button {
       border: none;
       outline: none;
