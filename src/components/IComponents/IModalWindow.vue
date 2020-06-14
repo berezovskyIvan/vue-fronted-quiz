@@ -1,15 +1,13 @@
 <template lang="pug">
   .i-modal-background(@click.self="close" :class="{ 'i-modal-background--close-animation': animation }")
-    .i-modal-background__window(:style="style" id="i-modal")
-      i-button.i-modal-background__window__close-button(
-        height="40px"
-        width="40px"
+    .i-modal-background__window(:style="style")
+      i-button.i-modal-background__window__close-button(height="35px"
+        width="35px"
         have-border
         round
-        @click="close"
-      )
+        @click="close")
         template(slot="content")
-          i-svg-icon(icon="close")
+          i-svg-icon(icon="close" font-size="13px")
 
       component(:is="modalWindow.component")
 </template>
@@ -72,9 +70,11 @@
     },
     beforeMount () {
       addEventListener('keydown', this.keydownHandler)
+      this.$root.$on('closeModal', this.close)
     },
     beforeDestroy () {
       removeEventListener('keydown', this.keydownHandler)
+      this.$root.$off('closeModal', this.close)
     }
   }
 </script>

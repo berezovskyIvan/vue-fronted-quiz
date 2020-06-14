@@ -1,8 +1,7 @@
 <template lang="pug">
-  .i-button(
-    :class="[{ 'i-button--border': haveBorder }, { 'i-button--disabled': disabled }]"
-    :style="style" @click="click"
-  )
+  .i-button(:class="[{ 'i-button--border': haveBorder }, { 'i-button--disabled': disabled }]"
+    :style="style"
+    @click="click")
     span(v-html="value")
     slot(v-if="!value" name="content")
 </template>
@@ -50,7 +49,7 @@
       },
       disabled: {
         type: Boolean,
-        requied: false,
+        required: false,
         default: false
       }
     },

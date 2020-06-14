@@ -2,8 +2,7 @@ import axios from 'axios'
 import types from './types'
 
 export default {
-  async [types.create] (context, obj) {
-    const data = obj
+  async [types.create] (context, body) {
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {
       headers: {
@@ -11,7 +10,7 @@ export default {
       }
     }
 
-    const result = await axios.post(types.create, data, options)
+    const result = await axios.post(types.create, body, options)
 
     return result
   },
@@ -28,7 +27,7 @@ export default {
     })
   },
 
-  async [types.update] (context, data) {
+  async [types.update] (context, body) {
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {
       headers: {
@@ -36,18 +35,13 @@ export default {
       }
     }
 
-    const result = await axios.put(types.update, data, options)
+    const result = await axios.put(types.update, body, options)
 
     return result
   },
 
   async [types.delete] (context, obj) {
-    let query = `?userId=${obj.userId}&url=${obj.url}`
-
-    if (obj.gid) {
-      query += `&gid=${obj.gid}`
-    }
-
+    const query = `?userId=${obj.userId}&sheetId=${obj.sheetId}`
     const url = types.delete + query
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {

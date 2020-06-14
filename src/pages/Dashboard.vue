@@ -18,7 +18,7 @@
   import IButton from "@/components/IComponents/IButton"
   import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
   import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
-  import TestEl from '@/pages/Dashboard/TestEl'
+  import QuizModal from '@/pages/Dashboard/QuizModal'
 
   export default {
     name: 'Dashboard',
@@ -40,7 +40,7 @@
           isOpen: true,
           width: 700,
           height: 250,
-          component: TestEl
+          component: QuizModal
         }
 
         this.$store.dispatch('modal/open', obj)

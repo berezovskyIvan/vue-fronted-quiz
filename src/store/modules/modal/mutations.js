@@ -6,10 +6,7 @@ const defaultObj = {
   component: null,
   width: null,
   height: null,
-  oldData: {
-    description: '',
-    url: ''
-  }
+  data: {}
 }
 
 export default {

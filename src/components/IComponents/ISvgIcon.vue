@@ -1,19 +1,21 @@
 <template lang="pug">
-  img.i-svg-icon(
-    v-show="successLoad"
-    :src="path"
-    :style="style"
-    @load="successLoad = true"
-    @error="errorLoad = true"
-    @click="$event => $emit('click', $event)"
-  )
+  .i-svg-icon(@click="$event => $emit('click', $event)")
+    simple-s-v-g(:src="path"
+      :width="strFontSize"
+      :height="strFontSize"
+      :style="style"
+      :custom-class-name="customClassName")
 </template>
 
 <script>
+  import { SimpleSVG } from 'vue-simple-svg'
   import { getStr, getNumeric } from '@/utlis'
 
   export default {
     name: 'ISvgIcon',
+    components: {
+      SimpleSVG
+    },
     props: {
       icon: {
         type: String,
@@ -24,6 +26,16 @@
         type: String,
         required: false,
         default: '15px'
+      },
+      fill: {
+        type: String,
+        required: false,
+        default: ''
+      },
+      customClassName: {
+        type: String,
+        required: false,
+        default: ''
       }
     },
     data () {
@@ -41,8 +53,7 @@
       },
       style () {
         return {
-          width: this.strFontSize,
-          height: this.strFontSize
+          fill: this.fill
         }
       }
     }
@@ -51,6 +62,6 @@
 
 <style lang="scss" scoped>
   .i-svg-icon {
-
+    display: flex;
   }
 </style>

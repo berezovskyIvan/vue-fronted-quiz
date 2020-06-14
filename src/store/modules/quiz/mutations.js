@@ -2,17 +2,17 @@ import types from './types'
 
 export default {
   [types.create] (state, obj) {
-    state.quizzes.push(obj)
+    state.list.push(obj)
   },
   [types.get] (state, arr) {
-    state.quizzes = arr
+    state.list = arr
   },
   [types.update] (state, obj) {
     const data = obj.data
-    const oldData = obj.oldData
+    const pastSheetId = obj.pastSheetId
 
-    state.quizzes = state.quizzes.map(item => {
-      if (item.user_id === data.user_id && item.url === oldData.url) {
+    state.list = state.list.map(item => {
+      if (item.user_id === data.user_id && item.sheet_id === pastSheetId) {
         return data
       } else {
         return item
@@ -20,12 +20,12 @@ export default {
     })
   },
   [types.delete] (state, obj) {
-    const index = state.quizzes.findIndex(item => {
-      return item.user_id === obj.userId && item.url === obj.url
+    const index = state.list.findIndex(item => {
+      return item.user_id === obj.userId && item.sheet_id === obj.sheetId
     })
 
     if (index !== -1) {
-      state.quizzes.splice(index, 1)
+      state.list.splice(index, 1)
     }
   }
 }

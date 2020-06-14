@@ -19,7 +19,7 @@
     data () {
       return {
         params: {
-          client_id: config.google_client_id
+          client_id: config.google.clientId
         },
         googleLoginButtonSignInVal: 'Sign in with Google',
         googleLoginButtonSignOutVal: 'Sign out',
@@ -45,13 +45,15 @@
             wc: {}
           }
         }
+
         if (currentUser) {
           authInfo.isSignedIn = true
           authInfo.currentUser = currentUser
         }
+
         const routeName = currentUser ? 'dashboard' : 'main'
         this.$store.dispatch('auth/updateCheckedStatus', true)
-        this.$store.dispatch('auth/updateAuthInfo', authInfo)
+        this.$store.dispatch('auth/updateInfo', authInfo)
         this.$router.push({ name: routeName })
       },
       onFailure (error) {

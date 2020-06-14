@@ -3,20 +3,21 @@
     i-loader(v-if="loading" width="70px" height="70px")
     template(v-else)
       .my-quiz__icons
-        i-svg-icon(icon="bin", @click="deleteQuiz")
-        i-svg-icon(icon="edit" @click="updateQuiz")
-      .my-quizzes__el__attr
+        i-svg-icon(icon="bin", font-size="17px" @click="deleteQuiz")
+        i-svg-icon(icon="edit" font-size="17px" @click="updateQuiz")
+      .my-quiz__attr
         span.my-quiz__attr__title Описание
         span.my-quiz__attr__value {{ item.description }}
       .my-quiz__attr
-        span.my-quiz__attr__title Путь
-        span.my-quiz__attr__value {{ item.url }}
+        span.my-quiz__attr__title Номер документа
+        span.my-quiz__attr__value {{ item.sheet_id }}
 </template>
 
 <script>
   import ILoader from '@/components/IComponents/ILoader'
   import ISvgIcon from '@/components/IComponents/ISvgIcon'
-  import TestEl from '@/pages/Dashboard/TestEl'
+  import QuizModal from '@/pages/Dashboard/QuizModal'
+  import QuizConfirmDelete from '@/pages/Dashboard/QuizConfirmDelete'
 
   export default {
     name: 'MyQuiz',
@@ -37,48 +38,28 @@
     },
     methods: {
       deleteQuiz () {
-        this.loading = true
-
         const obj = {
-          userId: this.item.user_id
-        }
-        const gidIndex = this.item.url.indexOf('gid=')
-
-        if (gidIndex !== -1) {
-          obj.url = this.item.url.substr(0, gidIndex - 1)
-          obj.gid = this.item.url.substr(gidIndex + 4, this.item.url.length)
-        } else {
-          obj.url = this.item.url
-        }
-
-        this.$store.dispatch('quiz/delete', obj).then(res => {
-          if (res && res.data) {
-            this.$store.commit('quiz/delete', {
-              userId: this.item.user_id,
-              url: this.item.url
-            })
+          isOpen: true,
+          width: 700,
+          height: 190,
+          component: QuizConfirmDelete,
+          data: {
+            userId: this.item.user_id,
+            sheetId: this.item.sheet_id
           }
+        }
 
-          this.loading = false
-        }).catch(err => {
-          if (err.response && err.response.statusText) {
-            console.error(err.response.statusText)
-          } else {
-            console.error(err)
-          }
-
-          this.loading = false
-        })
+        this.$store.dispatch('modal/open', obj)
       },
       updateQuiz () {
         const obj = {
           isOpen: true,
           width: 700,
           height: 250,
-          component: TestEl,
-          oldData: {
+          component: QuizModal,
+          data: {
             description: this.item.description,
-            url: this.item.url
+            sheetId: this.item.sheet_id
           }
         }
 
@@ -108,14 +89,17 @@
 
     &__icons {
       position: absolute;
+      display: flex;
       top: 15px;
       right: 15px;
 
-      .i-svg-icon {
-        cursor: pointer;
+      >>> {
+        .i-svg-icon {
+          cursor: pointer;
 
-        &:first-child {
-          margin-right: 10px;
+          &:first-child {
+            margin-right: 13px;
+          }
         }
       }
     }
