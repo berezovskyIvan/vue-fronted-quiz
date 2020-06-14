@@ -1,7 +1,10 @@
 <template lang="pug">
   .i-modal-background(@click.self="close" :class="{ 'i-modal-background--close-animation': animation }")
-    .i-modal-background__window(:style="style")
-      i-button.i-modal-background__window__close-button(height="35px"
+    .i-modal-background__window(:class="{ 'i-modal-background__window--loading': modalWindow.loading.is }" :style="style")
+      i-loader(v-show="modalWindow.loading.is" :width="modalWindow.loading.width" :height="modalWindow.loading.height")
+
+      i-button.i-modal-background__window__close-button(v-show="!modalWindow.loading.is"
+        height="35px"
         width="35px"
         have-border
         round
@@ -9,10 +12,11 @@
         template(slot="content")
           i-svg-icon(icon="close" font-size="13px")
 
-      component(:is="modalWindow.component")
+      component(v-show="!modalWindow.loading.is" :is="modalWindow.component")
 </template>
 
 <script>
+  import ILoader from '@/components/IComponents/ILoader'
   import IButton from '@/components/IComponents/IButton'
   import ISvgIcon from '@/components/IComponents/ISvgIcon'
   import { mapState } from 'vuex'
@@ -21,6 +25,7 @@
   export default {
     name: 'IModalWindow',
     components: {
+      ILoader,
       IButton,
       ISvgIcon
     },
@@ -114,6 +119,11 @@
       border-radius: 10px;
       background-color: $color-white;
       padding: 30px;
+
+      &--loading {
+        @include flex-center;
+        // height: 100%;
+      }
 
       &__close-button {
         position: absolute;

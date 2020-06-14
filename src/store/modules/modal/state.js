@@ -3,5 +3,10 @@ export default {
   component: null,
   width: null,
   height: null,
-  data: {}
+  data: {},
+  loading: {
+    is: false,
+    height: null,
+    width: null
+  }
 }

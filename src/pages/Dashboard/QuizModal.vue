@@ -1,29 +1,24 @@
 <template lang="pug">
-  .test-el(:class="{ 'test-el--loading': loading }")
-    i-loader(v-if="loading" height="100px" width="100px")
-
-    template(v-else)
-      i-input(v-model="description.model" :placeholder="description.placeholder" :width="400")
-      i-input(v-model="url.model" :placeholder="url.placeholder" :width="400")
-      i-button(value="Sync"
-        background-color="#8aacc8"
-        :height="50"
-        color="#fef9ff"
-        :disabled="disabled"
-        @click="click")
+  .test-el
+    i-input(v-model="description.model" :placeholder="description.placeholder" :width="400")
+    i-input(v-model="url.model" :placeholder="url.placeholder" :width="400")
+    i-button(value="Sync"
+      background-color="#8aacc8"
+      :height="50"
+      color="#fef9ff"
+      :disabled="disabled"
+      @click="click")
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import ILoader from '@/components/IComponents/ILoader'
   import IInput from '@/components/IComponents/IInput'
   import IButton from '@/components/IComponents/IButton'
+  import { mapState } from 'vuex'
   import { getGslUrl } from '@/utlis'
 
   export default {
     name: 'QuizModal',
     components: {
-      ILoader,
       IInput,
       IButton
     },
@@ -36,8 +31,7 @@
         url: {
           model: '',
           placeholder: `Ссылка "Google Spreadsheet Link"`
-        },
-        loading: false
+        }
       }
     },
     computed: {
@@ -50,6 +44,12 @@
       }
     },
     methods: {
+      getPastQuizData () {
+        if (this.modal.data.description && this.modal.data.sheetId) {
+          this.description.model = this.modal.data.description
+          this.url.model = getGslUrl(this.modal.data.sheetId)
+        }
+      },
       click () {
         if (this.modal.data.sheetId && this.modal.data.description) {
           this.updateQuiz()
@@ -57,8 +57,39 @@
           this.createQuiz()
         }
       },
+      createQuiz () {
+        this.$store.dispatch('modal/showLoader', {
+          height: 100,
+          width: 100
+        })
+
+        const obj = {
+          userId: this.userId,
+          description: this.description.model,
+          url: this.url.model
+        }
+
+        this.$store.dispatch('quiz/create', obj).then(res => {
+          if (res.data && Object.keys(res.data).length) {
+            this.$store.commit('quiz/create', res.data)
+          }
+
+          this.$root.$emit('closeModal')
+        }).catch(err => {
+          if (err.response && err.response.statusText) {
+            console.error(err.response.statusText)
+          } else {
+            console.error(err.response)
+          }
+
+          this.$root.$emit('closeModal')
+        })
+      },
       updateQuiz () {
-        this.loading = true
+        this.$store.dispatch('modal/showLoader', {
+          height: 100,
+          width: 100
+        })
 
         const body = {
           userId: this.userId,
@@ -75,7 +106,6 @@
             })
           }
 
-          this.loading = false
           this.$root.$emit('closeModal')
         }).catch(err => {
           if (err.response && err.response.statusText) {
@@ -84,43 +114,12 @@
             console.error(err)
           }
 
-          this.loading = false
           this.$root.$emit('closeModal')
-        })
-      },
-      createQuiz () {
-        this.loading = true
-
-        const obj = {
-          userId: this.userId,
-          description: this.description.model,
-          url: this.url.model
-        }
-
-        this.$store.dispatch('quiz/create', obj).then(res => {
-          if (res.data && Object.keys(res.data).length) {
-            this.$store.commit('quiz/create', res.data)
-          }
-
-          this.loading = false
-          this.$store.dispatch('modal/close')
-        }).catch(err => {
-          if (err.response && err.response.statusText) {
-            console.error(err.response.statusText)
-          } else {
-            console.error(err.response)
-          }
-
-          this.loading = false
-          this.$store.dispatch('modal/close')
         })
       }
     },
     mounted () {
-      if (this.modal.data.description && this.modal.data.sheetId) {
-        this.description.model = this.modal.data.description
-        this.url.model = getGslUrl(this.modal.data.sheetId)
-      }
+      this.getPastQuizData()
     }
   }
 </script>
@@ -129,13 +128,6 @@
   .test-el {
     display: flex;
     flex-direction: column;
-
-    &--loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-    }
 
     div:not(:last-child) {
       margin-bottom: 20px;

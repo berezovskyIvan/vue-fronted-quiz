@@ -1,7 +1,8 @@
 <template lang="pug">
   .quiz-dashboard
     span.quiz-dashboard__title {{ item.description }}
-    i-svg-icon(icon="rocket" font-size="25px" custom-class-name="quiz-dashboard__icon" @click="click")
+    router-link(:to="`/${item.key}`")
+      i-svg-icon(icon="rocket" font-size="25px" custom-class-name="quiz-dashboard__icon" @click="click")
 </template>
 
 <script>
@@ -20,7 +21,7 @@
     },
     methods: {
       click ($event) {
-        console.log('click', $event)
+        console.log('click', this.item)
       }
     }
   }

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import MainPage from '@/pages/MainPage'
 import Login from '@/pages/Login'
-import Dashboard from '@/pages/Dashboard';
+import Dashboard from '@/pages/Dashboard'
+import QuizPage from '@/pages/QuizPage'
 import PageNotFound from '@/pages/PageNotFound'
 
 Vue.use(VueRouter)
@@ -27,6 +28,11 @@ export default new VueRouter({
         requiredAuth: true
       },
       component: Dashboard
+    },
+    {
+      name: 'quiz',
+      path: '/:key',
+      component: QuizPage
     },
     {
       name: 'page-not-found',
