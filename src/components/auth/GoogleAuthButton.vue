@@ -65,20 +65,24 @@
 
 <style lang="scss" scoped>
   @import '~s/global';
+
   .login-button {
     display: flex;
     height: 50px;
+
     &__icon {
       @include flex-center;
       width: 50px;
       border: 2px solid $color-blue;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
+
       img {
         width: 25px;
         height: 25px;
       }
     }
+
     button {
       border: none;
       outline: none;

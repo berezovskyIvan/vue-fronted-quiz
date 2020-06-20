@@ -5,6 +5,7 @@
       .my-quiz__icons
         i-svg-icon(icon="bin", font-size="17px" @click="deleteQuiz")
         i-svg-icon(icon="edit" font-size="17px" @click="updateQuiz")
+        i-svg-icon(v-if="!item.is_publish" icon="rocket" font-size="17px" @click="publishQuiz")
       .my-quiz__attr
         span.my-quiz__attr__title Описание
         span.my-quiz__attr__value {{ item.description }}
@@ -17,6 +18,7 @@
   import ILoader from '@/components/IComponents/ILoader'
   import ISvgIcon from '@/components/IComponents/ISvgIcon'
   import QuizModal from '@/pages/Dashboard/QuizModal'
+  import QuizPublishModal from '@/pages/Dashboard/QuizPublishModal'
   import QuizConfirmDelete from '@/pages/Dashboard/QuizConfirmDelete'
 
   export default {
@@ -44,7 +46,6 @@
           height: 190,
           component: QuizConfirmDelete,
           data: {
-            userId: this.item.user_id,
             sheetId: this.item.sheet_id
           }
         }
@@ -60,6 +61,19 @@
           data: {
             description: this.item.description,
             sheetId: this.item.sheet_id
+          }
+        }
+
+        this.$store.dispatch('modal/open', obj)
+      },
+      publishQuiz () {
+        const obj = {
+          isOpen: true,
+          width: 700,
+          height: 250,
+          component: QuizPublishModal,
+          data: {
+            ...this.item
           }
         }
 
@@ -97,7 +111,7 @@
         .i-svg-icon {
           cursor: pointer;
 
-          &:first-child {
+          &:not(:last-child) {
             margin-right: 13px;
           }
         }

@@ -1,6 +1,6 @@
 <template lang="pug">
-  .login(:class="{ 'login--loading': loading }")
-    template(v-if="loading")
+  .login(:class="{ 'login--loading': authLoading }")
+    template(v-if="authLoading")
       i-loader
     template(v-else)
       google-auth-button

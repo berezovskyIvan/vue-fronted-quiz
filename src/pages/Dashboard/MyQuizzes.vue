@@ -5,7 +5,7 @@
 
 <script>
   import MyQuiz from './MyQuiz'
-  import { mapGetters } from 'vuex'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'MyQuizzes',
@@ -13,8 +13,8 @@
       MyQuiz
     },
     computed: {
-      ...mapGetters({
-        myQuizzes: 'quiz/myQuizzes'
+      ...mapState({
+        myQuizzes: state => state.quiz.my
       })
     }
   }

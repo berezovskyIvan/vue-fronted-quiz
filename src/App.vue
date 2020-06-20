@@ -17,9 +17,6 @@ export default {
     ...mapState({
       modalWindow: state => state.modal
     })
-  },
-  beforeMount () {
-    this.$store.dispatch('quiz/get')
   }
 }
 </script>

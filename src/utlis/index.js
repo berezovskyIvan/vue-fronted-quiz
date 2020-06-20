@@ -20,3 +20,7 @@ export function getNumeric (val) {
 export function getGslUrl (sheetId) {
   return `${config.gslUrl.firstPart}${sheetId}${config.gslUrl.lastPart}`
 }
+
+export function getColumnConfig (val, number) {
+  return val.replace('{number}', String(number))
+}

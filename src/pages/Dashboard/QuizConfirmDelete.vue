@@ -31,29 +31,27 @@
         })
 
         const obj = {
-          userId: this.modalData.userId,
           sheetId: this.modalData.sheetId
         }
 
         this.$store.dispatch('quiz/delete', obj).then(res => {
           if (res && res.data) {
             this.$store.commit('quiz/delete', {
-              userId: obj.userId,
               sheetId: obj.sheetId
             })
           }
 
           this.$root.$emit('closeModal')
         }).catch(err => {
-          if (err.response && err.response.statusText) {
-            console.error(err.response.statusText)
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
           } else {
             console.error(err)
           }
 
           this.$root.$emit('closeModal')
         })
-      },
+      }
     }
   }
 </script>

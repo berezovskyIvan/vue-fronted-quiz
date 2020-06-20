@@ -22,6 +22,7 @@
   import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
   import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
   import QuizModal from '@/pages/Dashboard/QuizModal'
+  import { mapState } from 'vuex'
 
   export default {
     name: 'Dashboard',
@@ -34,10 +35,42 @@
     },
     data () {
       return {
-        testElShow: false
+        myQuizzesLoading: false
+      }
+    },
+    computed: {
+      ...mapState({
+        isSignedIn: state => state.auth.isSignedIn
+      }),
+      loading () {
+        return this.authLoading || this.myQuizzesLoading
+      }
+    },
+    watch: {
+      isSignedIn (val) {
+        if (val) {
+          this.getMyQuizzes()
+        }
       }
     },
     methods: {
+      getMyQuizzes () {
+        this.myQuizzesLoading = true
+
+        this.$store.dispatch('quiz/get-my').then(({ data }) => {
+          this.$store.commit('quiz/get-my', data)
+
+          this.myQuizzesLoading = false
+        }).catch(err => {
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
+          } else {
+            console.error(err)
+          }
+
+          this.myQuizzesLoading = false
+        })
+      },
       openModal () {
         const obj = {
           isOpen: true,
@@ -47,6 +80,11 @@
         }
 
         this.$store.dispatch('modal/open', obj)
+      }
+    },
+    beforeMount () {
+      if (this.isSignedIn) {
+        this.getMyQuizzes()
       }
     }
   }

@@ -1,6 +1,10 @@
 <template lang="pug">
   .i-input(:style="style")
-    input(:value="value" ref="input" :placeholder="placeholder" @input="input")
+    input(:value="value"
+      ref="input"
+      :placeholder="placeholder"
+      @input="input"
+      @keydown.enter="enter")
 </template>
 
 <script>
@@ -57,6 +61,9 @@
     methods: {
       input () {
         this.$emit('input', this.$refs.input.value)
+      },
+      enter ($event) {
+        this.$emit('enter', $event)
       }
     }
   }

@@ -2,8 +2,9 @@ const typeName = 'quiz/'
 
 export default {
   create: typeName + 'create',
-  get: typeName + 'get',
+  getByKey: typeName + 'get-by-key',
+  getMy: typeName + 'get-my',
   update: typeName + 'update',
-  delete: typeName + 'delete',
-  myQuizzes: typeName + 'myQuizzes'
+  publish: typeName + 'publish',
+  delete: typeName + 'delete'
 }

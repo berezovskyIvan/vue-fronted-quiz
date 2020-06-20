@@ -6,7 +6,7 @@ export default {
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {
       headers: {
-        'X-AUTH-TOKEN': token
+        'ACCESS-TOKEN': token
       }
     }
 
@@ -14,24 +14,30 @@ export default {
 
     return result
   },
-
-  [types.get] (context) {
-    axios.get(types.get).then(({ data }) => {
-      context.commit(types.get, data)
-    }).catch(err => {
-      if (err.response && err.response.statusText) {
-        console.error(err.response.statusText)
-      } else {
-        console.error(err.response)
+  async [types.getMy] (context) {
+    const token = context.rootState.auth.currentUser.wc.access_token
+    const options = {
+      headers: {
+        'ACCESS-TOKEN': token
       }
-    })
-  },
+    }
 
+    const result = await axios.get(types.getMy, options)
+
+    return result
+  },
+  async [types.getByKey] (context, key) {
+    const query = `?key=${key}`
+    const url = types.getByKey + query
+    const result = await axios.get(url)
+
+    return result
+  },
   async [types.update] (context, body) {
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {
       headers: {
-        'X-AUTH-TOKEN': token
+        'ACCESS-TOKEN': token
       }
     }
 
@@ -39,14 +45,25 @@ export default {
 
     return result
   },
+  async [types.publish] (context, body) {
+    const token = context.rootState.auth.currentUser.wc.access_token
+    const options = {
+      headers: {
+        'ACCESS-TOKEN': token
+      }
+    }
 
+    const result = await axios.patch(types.publish, body, options)
+
+    return result
+  },
   async [types.delete] (context, obj) {
-    const query = `?userId=${obj.userId}&sheetId=${obj.sheetId}`
+    const query = `?sheetId=${obj.sheetId}`
     const url = types.delete + query
     const token = context.rootState.auth.currentUser.wc.access_token
     const options = {
       headers: {
-        'X-AUTH-TOKEN': token
+        'ACCESS-TOKEN': token
       }
     }
 

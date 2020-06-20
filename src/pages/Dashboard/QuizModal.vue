@@ -1,7 +1,7 @@
 <template lang="pug">
   .test-el
-    i-input(v-model="description.model" :placeholder="description.placeholder" :width="400")
-    i-input(v-model="url.model" :placeholder="url.placeholder" :width="400")
+    i-input(v-model="description.model" :placeholder="description.placeholder" :width="400" @enter="enter")
+    i-input(v-model="url.model" :placeholder="url.placeholder" :width="400" @enter="enter")
     i-button(value="Sync"
       background-color="#8aacc8"
       :height="50"
@@ -36,25 +36,36 @@
     },
     computed: {
       ...mapState({
-        userId: state => state.auth.currentUser.Ea,
         modal: state => state.modal
       }),
+      isEdit () {
+        return this.modal.data.sheetId && this.modal.data.description
+      },
       disabled () {
         return !this.description.model || !this.url.model
       }
     },
     methods: {
       getPastQuizData () {
-        if (this.modal.data.description && this.modal.data.sheetId) {
+        if (this.isEdit) {
           this.description.model = this.modal.data.description
           this.url.model = getGslUrl(this.modal.data.sheetId)
         }
       },
       click () {
-        if (this.modal.data.sheetId && this.modal.data.description) {
+        if (this.isEdit) {
           this.updateQuiz()
         } else {
           this.createQuiz()
+        }
+      },
+      enter () {
+        if (!this.disabled) {
+          if (this.isEdit) {
+            this.updateQuiz()
+          } else {
+            this.createQuiz()
+          }
         }
       },
       createQuiz () {
@@ -64,9 +75,8 @@
         })
 
         const obj = {
-          userId: this.userId,
-          description: this.description.model,
-          url: this.url.model
+          url: this.url.model,
+          description: this.description.model
         }
 
         this.$store.dispatch('quiz/create', obj).then(res => {
@@ -76,10 +86,10 @@
 
           this.$root.$emit('closeModal')
         }).catch(err => {
-          if (err.response && err.response.statusText) {
-            console.error(err.response.statusText)
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
           } else {
-            console.error(err.response)
+            console.error(err)
           }
 
           this.$root.$emit('closeModal')
@@ -92,9 +102,8 @@
         })
 
         const body = {
-          userId: this.userId,
-          description: this.description.model,
           url: this.url.model,
+          description: this.description.model,
           pastSheetId: this.modal.data.sheetId
         }
 
@@ -108,8 +117,8 @@
 
           this.$root.$emit('closeModal')
         }).catch(err => {
-          if (err.response && err.response.statusText) {
-            console.error(err.response.statusText)
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
           } else {
             console.error(err)
           }

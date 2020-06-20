@@ -36,7 +36,7 @@ export default new VueRouter({
     },
     {
       name: 'page-not-found',
-      path: '*',
+      path: '/page-not-found',
       component: PageNotFound
     },
   ]

@@ -4,7 +4,7 @@ export default {
   name: 'AuthMixin',
   data () {
     return {
-      loading: false
+      authLoading: false
     }
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
   watch: {
     wasCheckedAuthStatus (val) {
       if (val) {
-        this.loading = false
+        this.authLoading = false
         this.checkAuth()
       }
     }
@@ -40,7 +40,7 @@ export default {
   },
   created () {
     if (!this.wasCheckedAuthStatus) {
-      this.loading = true
+      this.authLoading = true
     }
   }
 }
