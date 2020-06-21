@@ -4,6 +4,7 @@ import MainPage from '@/pages/MainPage'
 import Login from '@/pages/Login'
 import Dashboard from '@/pages/Dashboard'
 import QuizPage from '@/pages/QuizPage'
+import QuizResultPage from '@/pages/QuizPage/QuizResultPage'
 import PageNotFound from '@/pages/PageNotFound'
 
 Vue.use(VueRouter)
@@ -32,12 +33,19 @@ export default new VueRouter({
     {
       name: 'quiz',
       path: '/:key',
-      component: QuizPage
+      component: QuizPage,
+      children: [
+        {
+          name: 'quiz-result',
+          path: '/:key/result/:variant',
+          component: QuizResultPage
+        }
+      ]
     },
     {
       name: 'page-not-found',
-      path: '/page-not-found',
+      path: '*',
       component: PageNotFound
-    },
+    }
   ]
 })

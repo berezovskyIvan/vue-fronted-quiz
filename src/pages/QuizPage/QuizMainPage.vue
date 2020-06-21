@@ -1,9 +1,11 @@
 <template lang="pug">
   .main-quiz-page
-    h1.main-page__header {{ header }}
-    .quiz-main-page__body {{ body }}
-    img.quiz-main-page__img(:src="imagePath")
-    i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px", @click="enterQuiz")
+    div(style="margin-right: 50px")
+      h1.main-quiz-page__header {{ header }}
+      .main-quiz-page__body {{ body }}
+      i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px", @click="enterQuiz")
+
+    img.main-quiz-page__img(:src="imagePath")
 </template>
 
 <script>
@@ -62,7 +64,12 @@
 <style lang="scss" scoped>
   @import '~s/global';
 
-  .quiz-main-page {
+  .main-quiz-page {
+    display: flex;
 
+    &__body {
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
   }
 </style>

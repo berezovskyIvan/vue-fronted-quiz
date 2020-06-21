@@ -1,13 +1,15 @@
 <template lang="pug">
   .quiz-questions-page
-    h3.quiz-questions-page__title {{ `Вопрос номер №${currentPage + 1}` }}
-    .quiz-questions-page__body {{ body }}
+    div(style="margin-right: 50px")
+      h3.quiz-questions-page__title {{ `Вопрос № ${currentPage + 1}` }}
+      .quiz-questions-page__body {{ body }}
+      .quiz-questions-page__answers
+        .quiz-questions-page__answers__el(v-for="(item, index) in answers"
+          :key="index"
+          v-html="item.text"
+          @click="showQuestionResult(item.value)")
+
     img.quiz-questions-page__img(:src="imagePath")
-    .quiz-questions-page__answers
-      .quiz-questions-page__answers__el(v-for="(item, index) in answers"
-        :key="index"
-        v-html="item.text"
-        @click="showQuestionResult(item.value)")
 </template>
 
 <script>
@@ -77,9 +79,12 @@
         return ''
       },
       showQuestionResult ($event) {
+        const values = this.answers.values(u => Number(u.value))
+        const max = Math.max(values)
+        const answerValueNum = Number($event)
         const obj = {
-          answer: $event,
-          success: $event === '30'
+          points: answerValueNum,
+          success: $event === answerValueNum
         }
 
         this.$emit('show-question-result', obj)
@@ -89,5 +94,44 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~s/global';
 
+  .quiz-questions-page {
+    display: flex;
+
+    &__body {
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
+
+    &__answers {
+      display: flex;
+      flex-wrap: wrap;
+      width: 681px;
+      border-radius: 20px;
+      border: 1px solid $color-silver;
+
+      &__el {
+        @include flex-center;
+        height: 100px;
+        width: 300px;
+        padding-left: 20px;
+        padding-right: 20px;
+        cursor: pointer;
+
+        &:nth-child(1) {
+          border-right: 1px solid $color-silver;
+          border-bottom: 1px solid $color-silver;
+        }
+
+        &:nth-child(2) {
+          border-bottom: 1px solid $color-silver;
+        }
+
+        &:nth-child(3) {
+          border-right: 1px solid $color-silver;
+        }
+      }
+    }
+  }
 </style>

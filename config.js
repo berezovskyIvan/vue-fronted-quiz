@@ -9,6 +9,7 @@ module.exports = {
     firstPart: 'https://docs.google.com/spreadsheets/d/',
     lastPart: '/edit'
   },
+  quizResultCount: 4,
   questionsCount: 7,
   sheetData: {
     mainPage: {
@@ -39,9 +40,10 @@ module.exports = {
       }
     },
     resultPage: {
-      header: 'Result Header',
-      body: 'Result Body',
-      image: 'Result Image'
+      header: 'Page Header',
+      body: 'Page Body',
+      image: 'Page Image',
+      total: 'Total Answer Value'
     }
   }
 }

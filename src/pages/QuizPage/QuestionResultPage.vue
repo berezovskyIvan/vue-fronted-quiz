@@ -1,9 +1,10 @@
 <template lang="pug">
   .question-result-page
-    h1.question-result-page__header {{ header }}
-    .question-result-page__body {{ text }}
+    div(style="margin-right: 50px")
+      h1.question-result-page__header {{ header }}
+      .question-result-page__body {{ text }}
+      i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px" @click="next")
     img.question-result-page__img(:src="imagePath")
-    i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px" @click="next")
 </template>
 
 <script>
@@ -76,15 +77,17 @@
           this.$emit('show-result')
         }
       }
-    },
-    mounted () {
-      console.log('info', this.info, this.currentPage, this.correctAnswer)
     }
   }
 </script>
 
 <style lang="scss" scoped>
   .question-result-page {
+    display: flex;
 
+    &__body {
+      max-width: 500px;
+      margin-bottom: 20px;
+    }
   }
 </style>
