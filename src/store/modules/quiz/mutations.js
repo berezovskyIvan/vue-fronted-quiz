@@ -6,7 +6,11 @@ export default {
     state.my.push(obj)
   },
   [types.getMy] (state, arr) {
-    state.my = arr
+    if (arr && arr.length) {
+      state.my = arr
+    } else {
+     state.my = []
+    }
   },
   [types.getByKey] (state, obj) {
     state.current = obj
@@ -33,6 +37,13 @@ export default {
     if (index !== 1) {
       Vue.set(state.my[index], 'is_publish', true)
       Vue.set(state.my[index], 'key', obj.key)
+    }
+  },
+  [types.stopPublishing] (state, obj) {
+    const index = state.my.findIndex(item => item.sheet_id === obj.sheetId)
+
+    if (index !== 1) {
+      Vue.set(state.my[index], 'is_publish', false)
     }
   },
   [types.delete] (state, obj) {

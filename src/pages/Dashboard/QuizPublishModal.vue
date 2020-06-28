@@ -70,10 +70,15 @@
         this.$store.dispatch('quiz/publish', obj).then(res => {
           if (res && res.data) {
             this.$store.commit('quiz/publish', obj)
+            this.$router.push({
+              name: 'quiz',
+              params: {
+                key: obj.key
+              }
+            })
           }
 
           this.$root.$emit('closeModal')
-          console.log('store', this.$store)
         }).catch(err => {
           this.$root.$emit('closeModal')
         })

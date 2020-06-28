@@ -3,6 +3,9 @@
     div(style="margin-right: 50px")
       h1.quiz-result-page__header {{ header }}
       .quiz-result-page__body {{ body }}
+      .quiz-result-page__social-links
+        a.quiz-result-page__social-links__item(v-for="(item, index) in socialLinks" :key="index" :href="getSocialUrl(item)")
+          img(:src="`/src/images/icons/${item}.svg`")
     img.quiz-result-page__img(:src="imagePath")
 </template>
 
@@ -45,6 +48,15 @@
         }
 
         return ''
+      },
+      socialLinks () {
+        if (this.info && this.info.length) {
+          const val = this.getValue(this.sheetData.socialLinks)
+          const arr = val.split(',')
+          return arr.map(u => u.trim().toLowerCase())
+        }
+
+        return []
       }
     },
     methods: {
@@ -54,7 +66,8 @@
             return false
           }
 
-          return item[0].toLowerCase() === val.toLowerCase()
+          return item[0].toLowerCase() === val.toLowerCase() ||
+            item[0].toLowerCase().includes(val.toLowerCase())
         })
 
         if (data && data.length && data.length > 1) {
@@ -62,6 +75,9 @@
         }
 
         return ''
+      },
+      getSocialUrl (item) {
+        return this.sheetData[item] + `${config.clientUrl}${this.$route.path}`
       }
     },
     beforeMount () {
@@ -78,6 +94,24 @@
 
     &__body {
       max-width: 500px;
+      margin-bottom: 30px;
+    }
+
+    &__social-links {
+      display: flex;
+
+      &__item {
+        cursor: pointer;
+
+        &:first-child {
+          margin-right: 15px;
+        }
+
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
     }
   }
 </style>

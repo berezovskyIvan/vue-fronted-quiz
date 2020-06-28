@@ -57,6 +57,18 @@ export default {
 
     return result
   },
+  async [types.stopPublishing] (context, body) {
+    const token = context.rootState.auth.currentUser.wc.access_token
+    const options = {
+      headers: {
+        'ACCESS-TOKEN': token
+      }
+    }
+
+    const result = await axios.patch(types.stopPublishing, body, options)
+
+    return result
+  },
   async [types.delete] (context, obj) {
     const query = `?sheetId=${obj.sheetId}`
     const url = types.delete + query

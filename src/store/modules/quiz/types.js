@@ -6,5 +6,6 @@ export default {
   getMy: typeName + 'get-my',
   update: typeName + 'update',
   publish: typeName + 'publish',
+  stopPublishing: typeName + 'stop-publishing',
   delete: typeName + 'delete'
 }

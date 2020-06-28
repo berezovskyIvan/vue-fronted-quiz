@@ -2,7 +2,7 @@
   .my-quiz(:class="{ 'my-quiz--loading': loading }")
     i-loader(v-if="loading" width="70px" height="70px")
     template(v-else)
-      .my-quiz__icons
+      // .my-quiz__icons
         i-svg-icon(icon="bin", font-size="17px" @click="deleteQuiz")
         i-svg-icon(icon="edit" font-size="17px" @click="updateQuiz")
         i-svg-icon(v-if="!item.is_publish" icon="rocket" font-size="17px" @click="publishQuiz")
@@ -12,10 +12,16 @@
       .my-quiz__attr
         span.my-quiz__attr__title Номер документа
         span.my-quiz__attr__value {{ item.sheet_id }}
+      .my-quiz__buttons
+        i-button(value="Sync" have-border background-color="#f5f5f5" height="50px" @click="updateQuiz")
+        i-button(v-if="!item.is_publish" value="Publish" have-border background-color="#f5f5f5" height="50px" @click="publishQuiz")
+        i-button(v-else value="Stop publishing" have-border background-color="#f5f5f5" height="50px" @click="stopPublishingQuiz")
+        i-button(value="Delete" have-border background-color="#f5f5f5" height="50px" @click="deleteQuiz")
 </template>
 
 <script>
   import ILoader from '@/components/IComponents/ILoader'
+  import IButton from '@/components/IComponents/IButton'
   import ISvgIcon from '@/components/IComponents/ISvgIcon'
   import QuizModal from '@/pages/Dashboard/QuizModal'
   import QuizPublishModal from '@/pages/Dashboard/QuizPublishModal'
@@ -25,7 +31,8 @@
     name: 'MyQuiz',
     components: {
       ILoader,
-      ISvgIcon
+      ISvgIcon,
+      IButton
     },
     props: {
       item: {
@@ -78,6 +85,29 @@
         }
 
         this.$store.dispatch('modal/open', obj)
+      },
+      stopPublishingQuiz () {
+        const body = {
+          sheetId: this.item.sheet_id
+        }
+
+        this.loading = true
+
+        this.$store.dispatch('quiz/stop-publishing', body).then(({ status }) => {
+          if (status === 200) {
+            this.$store.commit('quiz/stop-publishing', body)
+          }
+
+          this.loading = false
+        }).catch(err => {
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
+          } else {
+            console.error(err)
+          }
+
+          this.loading = false
+        })
       }
     }
   }
@@ -98,7 +128,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 118px;
+      height: 192px;
     }
 
     &__icons {
@@ -125,6 +155,14 @@
 
       &__title {
         font-weight: 600;
+        margin-right: 15px;
+      }
+    }
+
+    &__buttons {
+      display: flex;
+
+      .i-button:not(:last-child) {
         margin-right: 15px;
       }
     }

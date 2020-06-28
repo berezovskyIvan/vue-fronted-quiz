@@ -1,5 +1,6 @@
 module.exports = {
   port: 9000,
+  clientUrl: 'http://localhost:9000',
   serverUrl: 'http://localhost:9010',
   google: {
     clientId: '319025445784-5ft05m05ugs0hf8aafoa0ubou1qr9pbf.apps.googleusercontent.com',
@@ -43,7 +44,10 @@ module.exports = {
       header: 'Page Header',
       body: 'Page Body',
       image: 'Page Image',
-      total: 'Total Answer Value'
+      total: 'Total Answer Value',
+      socialLinks: 'Social Sharing Links',
+      facebook: 'https://www.facebook.com/sharer.php?u=',
+      twitter: 'http://www.twitter.com/share?url='
     }
   }
 }

@@ -46,7 +46,7 @@
     },
     computed: {
       path () {
-        return `src/images/icons/${this.icon}.svg`
+        return `/src/images/icons/${this.icon}.svg`
       },
       strFontSize () {
         return getStr(this.fontSize)

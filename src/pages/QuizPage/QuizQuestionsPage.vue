@@ -1,7 +1,7 @@
 <template lang="pug">
   .quiz-questions-page
     div(style="margin-right: 50px")
-      h3.quiz-questions-page__title {{ `Вопрос № ${currentPage + 1}` }}
+      h3.quiz-questions-page__title {{ `Вопрос № ${currentPage + 1} / ${questionsCount}` }}
       .quiz-questions-page__body {{ body }}
       .quiz-questions-page__answers
         .quiz-questions-page__answers__el(v-for="(item, index) in answers"
@@ -27,6 +27,11 @@
       currentPage: {
         type: Number,
         required: true
+      }
+    },
+    data () {
+      return {
+        questionsCount: config.questionsCount
       }
     },
     computed: {
