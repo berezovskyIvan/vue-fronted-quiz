@@ -75,7 +75,7 @@
         const obj = {
           isOpen: true,
           width: 700,
-          height: 250,
+          height: 300,
           component: QuizModal
         }
 

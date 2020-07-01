@@ -42,7 +42,7 @@ export default {
   [types.stopPublishing] (state, obj) {
     const index = state.my.findIndex(item => item.sheet_id === obj.sheetId)
 
-    if (index !== 1) {
+    if (index !== -1) {
       Vue.set(state.my[index], 'is_publish', false)
     }
   },

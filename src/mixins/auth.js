@@ -34,7 +34,7 @@ export default {
   methods: {
     checkAuth () {
       if (this.requiredAuth && !this.isSignedIn) {
-        this.$router.push({ name: 'main' })
+        this.$router.push({ name: 'login' })
       }
     }
   },

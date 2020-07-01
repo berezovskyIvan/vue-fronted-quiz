@@ -2,6 +2,7 @@
   .test-el
     i-input(v-model="description.model" :placeholder="description.placeholder" :width="400" @enter="enter")
     i-input(v-model="url.model" :placeholder="url.placeholder" :width="400" @enter="enter")
+    .test-el__err-msg(v-if="errorLoading") Ошибка загрузки файла
     i-button(value="Sync"
       background-color="#8aacc8"
       :height="50"
@@ -31,7 +32,8 @@
         url: {
           model: '',
           placeholder: `Ссылка "Google Spreadsheet Link"`
-        }
+        },
+        errorLoading: false
       }
     },
     computed: {
@@ -92,7 +94,9 @@
             console.error(err)
           }
 
-          this.$root.$emit('closeModal')
+          this.$store.dispatch('modal/hideLoader')
+
+          this.errorLoading = true
         })
       },
       updateQuiz () {
@@ -123,7 +127,9 @@
             console.error(err)
           }
 
-          this.$root.$emit('closeModal')
+          this.$store.dispatch('modal/hideLoader')
+
+          this.errorLoading = true
         })
       }
     },
@@ -134,12 +140,25 @@
 </script>
 
 <style lang="scss" scoped>
+  @import '~s/global';
+
   .test-el {
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     div:not(:last-child) {
       margin-bottom: 20px;
+    }
+
+    &__err-msg {
+      margin-top: 5px;
+      margin-left: 5px;
+      color: $color-red;
+    }
+
+    .i-button {
+      margin-top: auto;
     }
   }
 </style>

@@ -3,7 +3,7 @@
     .test-el__input
       .test-el__input__info-msg Ключ должен начинаться с латинской буквы. Может содеражть в себе только латинские буквы, цифры и символ "-"
       i-input(v-model="key.model" :placeholder="key.placeholder" :width="400" @enter="enter")
-      .test-el__input__err-msg(v-if="haveError") Ошибка в наименовании ключа
+      .test-el__input__err-msg(v-if="haveError") {{ errorText }}
     i-button(value="Publish"
       background-color="#8aacc8"
       :height="50"
@@ -28,7 +28,8 @@
         key: {
           placeholder: 'Введите ключ страницы quiz',
           model: ''
-        }
+        },
+        conflictKeyError: false
       }
     },
     computed: {
@@ -39,6 +40,18 @@
         return !this.key.model
       },
       haveError () {
+        return this.urlError || this.conflictKeyError
+      },
+      errorText () {
+        if (this.urlError) {
+          return 'Ошибка в наименовании ключа'
+        } else if (this.conflictKeyError) {
+          return 'Ключ с таким наименованием уже существует'
+        }
+
+        return ''
+      },
+      urlError () {
         if (!this.key.model) {
           return false
         } else {
@@ -80,7 +93,18 @@
 
           this.$root.$emit('closeModal')
         }).catch(err => {
-          this.$root.$emit('closeModal')
+          if (err && err.response && err.response.data) {
+            console.error(err.response.data)
+          } else {
+            console.error(err)
+          }
+
+          if (err.response && err.response.status === 409) {
+            this.conflictKeyError = true
+            this.$store.dispatch('modal/hideLoader')
+          } else {
+            this.$root.$emit('closeModal')
+          }
         })
       }
     }

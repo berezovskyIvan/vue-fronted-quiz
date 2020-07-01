@@ -2,10 +2,6 @@
   .my-quiz(:class="{ 'my-quiz--loading': loading }")
     i-loader(v-if="loading" width="70px" height="70px")
     template(v-else)
-      // .my-quiz__icons
-        i-svg-icon(icon="bin", font-size="17px" @click="deleteQuiz")
-        i-svg-icon(icon="edit" font-size="17px" @click="updateQuiz")
-        i-svg-icon(v-if="!item.is_publish" icon="rocket" font-size="17px" @click="publishQuiz")
       .my-quiz__attr
         span.my-quiz__attr__title Описание
         span.my-quiz__attr__value {{ item.description }}
@@ -165,6 +161,10 @@
       .i-button:not(:last-child) {
         margin-right: 15px;
       }
+    }
+
+    &:not(:last-child) {
+      margin-bottom: 20px;
     }
   }
 </style>
