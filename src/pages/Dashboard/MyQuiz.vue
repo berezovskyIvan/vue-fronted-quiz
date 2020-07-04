@@ -1,18 +1,32 @@
 <template lang="pug">
-  .my-quiz(:class="{ 'my-quiz--loading': loading }")
-    i-loader(v-if="loading" width="70px" height="70px")
-    template(v-else)
-      .my-quiz__attr
-        span.my-quiz__attr__title Описание
-        span.my-quiz__attr__value {{ item.description }}
-      .my-quiz__attr
-        span.my-quiz__attr__title Номер документа
-        span.my-quiz__attr__value {{ item.sheet_id }}
-      .my-quiz__buttons
-        i-button(value="Sync" have-border background-color="#f5f5f5" height="50px" @click="updateQuiz")
-        i-button(v-if="!item.is_publish" value="Publish" have-border background-color="#f5f5f5" height="50px" @click="publishQuiz")
-        i-button(v-else value="Stop publishing" have-border background-color="#f5f5f5" height="50px" @click="stopPublishingQuiz")
-        i-button(value="Delete" have-border background-color="#f5f5f5" height="50px" @click="deleteQuiz")
+  .my-quiz
+    i-button.my-quiz__delete-button(
+      height="35px"
+      width="35px"
+      have-border
+      round
+      @click="deleteQuiz"
+    )
+      template(slot="content")
+        i-svg-icon(icon="bin" font-size="13px")
+    .my-quiz__attr
+      span.my-quiz__attr__title Description
+      span.my-quiz__attr__value {{ item.description }}
+    .my-quiz__attr
+      span.my-quiz__attr__title Document number
+      span.my-quiz__attr__value {{ item.sheet_id }}
+    .my-quiz__buttons
+      i-button(value="Sync" background-color="#f5f5f5" height="45px" @click="updateQuiz")
+      i-button(v-if="!item.is_publish" value="Publish" background-color="#f5f5f5" height="45px" @click="publishQuiz")
+      i-button(
+        v-else
+        value="Stop publishing"
+        background-color="#f5f5f5"
+        height="45px"
+        width="162px"
+        :loading="loading.stopPublish"
+        @click="stopPublishingQuiz"
+      )
 </template>
 
 <script>
@@ -22,6 +36,7 @@
   import QuizModal from '@/pages/Dashboard/QuizModal'
   import QuizPublishModal from '@/pages/Dashboard/QuizPublishModal'
   import QuizConfirmDelete from '@/pages/Dashboard/QuizConfirmDelete'
+  import { changeStatusPublishQuiz } from '@/components/messages'
 
   export default {
     name: 'MyQuiz',
@@ -38,14 +53,19 @@
     },
     data () {
       return {
-        loading: false
+        loading: {
+          sync: false,
+          publish: false,
+          stopPublish: false,
+          delete: false
+        }
       }
     },
     methods: {
       deleteQuiz () {
         const obj = {
           isOpen: true,
-          width: 700,
+          width: 550,
           height: 190,
           component: QuizConfirmDelete,
           data: {
@@ -58,7 +78,7 @@
       updateQuiz () {
         const obj = {
           isOpen: true,
-          width: 700,
+          width: 550,
           height: 250,
           component: QuizModal,
           data: {
@@ -87,14 +107,21 @@
           sheetId: this.item.sheet_id
         }
 
-        this.loading = true
+        this.loading.stopPublish = true
 
         this.$store.dispatch('quiz/stop-publishing', body).then(({ status }) => {
           if (status === 200) {
             this.$store.commit('quiz/stop-publishing', body)
+
+            const notifyData = {
+              type: 'info',
+              val: changeStatusPublishQuiz
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
           }
 
-          this.loading = false
+          this.loading.stopPublish = false
         }).catch(err => {
           if (err && err.response && err.response.data) {
             console.error(err.response.data)
@@ -102,7 +129,7 @@
             console.error(err)
           }
 
-          this.loading = false
+          this.loading.stopPublish = false
         })
       }
     }
@@ -118,13 +145,37 @@
     width: 700px;
     padding: 30px;
     border-radius: 10px;
-    border: 1px solid $color-silver;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 
     &--loading {
       display: flex;
       align-items: center;
       justify-content: center;
       height: 192px;
+    }
+
+    &__delete-button {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+
+      &:hover {
+        &:before {
+          content: '';
+          position: absolute;
+          height: 28px;
+          width: 28px;
+          border-radius: 50%;
+          background-color: $color-silver-light;
+        }
+
+        >>> {
+          .i-svg-icon {
+            z-index: 1;
+          }
+        }
+      }
     }
 
     &__icons {

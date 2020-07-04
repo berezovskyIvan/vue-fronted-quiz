@@ -4,10 +4,12 @@
     i-input(v-model="url.model" :placeholder="url.placeholder" :width="400" @enter="enter")
     .test-el__err-msg(v-if="errorLoading") Ошибка загрузки файла
     i-button(value="Sync"
-      background-color="#8aacc8"
-      :height="50"
-      color="#fef9ff"
+      :height="45"
+      :width="88"
+      have-border
+      background-color="white"
       :disabled="disabled"
+      :loading="btnLoading"
       @click="click")
 </template>
 
@@ -16,6 +18,7 @@
   import IButton from '@/components/IComponents/IButton'
   import { mapState } from 'vuex'
   import { getGslUrl } from '@/utlis'
+  import { createQuiz, updateQuiz } from '@/components/messages'
 
   export default {
     name: 'QuizModal',
@@ -33,6 +36,7 @@
           model: '',
           placeholder: `Ссылка "Google Spreadsheet Link"`
         },
+        btnLoading: false,
         errorLoading: false
       }
     },
@@ -71,10 +75,7 @@
         }
       },
       createQuiz () {
-        this.$store.dispatch('modal/showLoader', {
-          height: 100,
-          width: 100
-        })
+        this.btnLoading = true
 
         const obj = {
           url: this.url.model,
@@ -84,8 +85,16 @@
         this.$store.dispatch('quiz/create', obj).then(res => {
           if (res.data && Object.keys(res.data).length) {
             this.$store.commit('quiz/create', res.data)
+
+            const notifyData = {
+              val: createQuiz,
+              type: 'info'
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
           }
 
+          this.btnLoading = false
           this.$root.$emit('closeModal')
         }).catch(err => {
           if (err && err.response && err.response.data) {
@@ -94,16 +103,12 @@
             console.error(err)
           }
 
-          this.$store.dispatch('modal/hideLoader')
-
+          this.btnLoading = false
           this.errorLoading = true
         })
       },
       updateQuiz () {
-        this.$store.dispatch('modal/showLoader', {
-          height: 100,
-          width: 100
-        })
+        this.btnLoading = true
 
         const body = {
           url: this.url.model,
@@ -117,8 +122,16 @@
               data: res.data,
               pastSheetId: body.pastSheetId
             })
+
+            const notifyData = {
+              val: updateQuiz,
+              type: 'info'
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
           }
 
+          this.btnLoading = false
           this.$root.$emit('closeModal')
         }).catch(err => {
           if (err && err.response && err.response.data) {
@@ -127,8 +140,7 @@
             console.error(err)
           }
 
-          this.$store.dispatch('modal/hideLoader')
-
+          this.btnLoading = false
           this.errorLoading = true
         })
       }

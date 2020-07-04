@@ -5,9 +5,11 @@
       i-input(v-model="key.model" :placeholder="key.placeholder" :width="400" @enter="enter")
       .test-el__input__err-msg(v-if="haveError") {{ errorText }}
     i-button(value="Publish"
-      background-color="#8aacc8"
+      background-color="white"
       :height="50"
-      color="#fef9ff"
+      :width="135"
+      have-border
+      :loading="pusblishLoading"
       :disabled="disabled"
       @click="click")
 </template>
@@ -29,7 +31,8 @@
           placeholder: 'Введите ключ страницы quiz',
           model: ''
         },
-        conflictKeyError: false
+        conflictKeyError: false,
+        pusblishLoading: false
       }
     },
     computed: {
@@ -70,10 +73,7 @@
         }
       },
       publishQuiz () {
-        this.$store.dispatch('modal/showLoader', {
-          height: 100,
-          width: 100
-        })
+        this.pusblishLoading = true
 
         const obj = {
           sheetId: this.modal.data.sheet_id,
@@ -91,6 +91,7 @@
             })
           }
 
+          this.pusblishLoading = false
           this.$root.$emit('closeModal')
         }).catch(err => {
           if (err && err.response && err.response.data) {
@@ -101,10 +102,11 @@
 
           if (err.response && err.response.status === 409) {
             this.conflictKeyError = true
-            this.$store.dispatch('modal/hideLoader')
           } else {
             this.$root.$emit('closeModal')
           }
+
+          this.pusblishLoading = false
         })
       }
     }

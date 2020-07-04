@@ -2,18 +2,32 @@
   .quiz-confirm-delete
     h3.quiz-confirm-delete__title Вы дейстивтельно хотите удалить quiz?
     .quiz-confirm-delete__buttons
-      i-button(value="Отмена" have-border background-color="#f5f5f5" height="50px" @click="closeModal")
-      i-button(value="Удалить" have-border background-color="#8aacc8" height="50px" @click="deleteQuiz")
+      i-button(value="Отмена" have-border background-color="white" height="45px" @click="closeModal")
+      i-button(
+        value="Удалить"
+        background-color="#212121"
+        color="#fef9ff"
+        height="45px"
+        width="115px"
+        :loading="deleteLoading"
+        @click="deleteQuiz"
+      )
 </template>
 
 <script>
   import IButton from '@/components/IComponents/IButton'
   import { mapState } from 'vuex'
+  import { deleteQuiz } from '@/components/messages'
 
   export default {
     name: 'QuizConfirmDelete',
     components: {
       IButton
+    },
+    data () {
+      return {
+        deleteLoading: false
+      }
     },
     computed: {
       ...mapState({
@@ -25,10 +39,7 @@
         this.$root.$emit('closeModal')
       },
       deleteQuiz () {
-        this.$store.dispatch('modal/showLoader', {
-          height: 100,
-          width: 100
-        })
+        this.deleteLoading = true
 
         const obj = {
           sheetId: this.modalData.sheetId
@@ -39,6 +50,14 @@
             this.$store.commit('quiz/delete', {
               sheetId: obj.sheetId
             })
+
+            const notifyData = {
+              type: 'info',
+              val: deleteQuiz
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
+            this.deleteLoading = false
           }
 
           this.$root.$emit('closeModal')
@@ -49,6 +68,7 @@
             console.error(err)
           }
 
+          this.deleteLoading = false
           this.$root.$emit('closeModal')
         })
       }

@@ -4,14 +4,15 @@
       i-loader
     template(v-else)
       .dashboard__content
-        .dashboard__content__title
-          h1.dashboard__content__title__value Панель администрирования
-          google-auth-button.dashboard__content__title__logout-button
+        .dashboard__content__header
+          h1.dashboard__content__header__title My admin dashboard
+          google-auth-button.dashboard__content__header__logout-button
         .dashboard__content__body
-          i-button.dashboard__content__body__test-el-button(value="Создать тест"
-            height="50px"
-            background-color="#f5f5f5"
-            @click="openModal")
+          .dashboard__content__body__button-block
+            i-button(value="Create quiz"
+              background-color="#f5f5f5"
+              height="45px"
+              @click="openModal")
         my-quizzes
 </template>
 
@@ -74,7 +75,7 @@
       openModal () {
         const obj = {
           isOpen: true,
-          width: 700,
+          width: 550,
           height: 300,
           component: QuizModal
         }
@@ -100,12 +101,18 @@
     }
 
     &__content {
-      &__title {
-        margin-bottom: 50px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
-        &__value {
+      &__header {
+        width: 100%;
+        height: 120px;
+
+        &__title {
           @include flex-center;
           font-size: 30px;
+          height: 50px;
         }
 
         &__logout-button {
@@ -117,11 +124,16 @@
 
       &__body {
         display: flex;
-        padding-right: 50px;
-        padding-left: 50px;
+        width: 700px;
+        margin-bottom: 20px;
 
-        &__test-el-button {
-          margin-left: auto;
+        &__button-block {
+          @include flex-center;
+          background: white;
+          height: 90px;
+          width: 700px;
+          border-radius: 10px;
+          border: 1px dashed $color-black;
         }
       }
     }

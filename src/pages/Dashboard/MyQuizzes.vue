@@ -22,6 +22,8 @@
 
 <style lang="scss" scoped>
   .my-quizzes {
-    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 </style>

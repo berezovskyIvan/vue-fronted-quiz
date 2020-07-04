@@ -2,15 +2,23 @@
   .i-button(:class="[{ 'i-button--border': haveBorder }, { 'i-button--disabled': disabled }]"
     :style="style"
     @click="click")
-    span(v-html="value")
-    slot(v-if="!value" name="content")
+
+    i-loader(v-if="loading" width="30px" height="30px")
+
+    template(v-else)
+      span(v-html="value")
+      slot(v-if="!value" name="content")
 </template>
 
 <script>
+  import ILoader from '@/components/IComponents/ILoader'
   import { getStr, getNumeric } from '@/utlis'
 
   export default {
     name: 'IButton',
+    components: {
+      ILoader
+    },
     props: {
       value: {
         type: String,
@@ -48,6 +56,11 @@
         default: false
       },
       disabled: {
+        type: Boolean,
+        required: false,
+        default: false
+      },
+      loading: {
         type: Boolean,
         required: false,
         default: false
@@ -95,8 +108,9 @@
     width: fit-content;
     padding-left: 25px;
     padding-right: 25px;
-    border-radius: 5px;
+    border-radius: 8px;
     font-weight: 500;
+    box-sizing: border-box;
     cursor: pointer;
 
     &:hover {
@@ -104,10 +118,10 @@
     }
 
     &--border {
-      border: 1px solid $color-silver;
+      border: 1px solid $color-black;
 
       &:hover {
-        border: 1px solid $color-silver-dark
+        border: 1px solid $color-silver-dark;
       }
     }
 

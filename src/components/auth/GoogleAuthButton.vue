@@ -12,7 +12,7 @@
   import GoogleLogin from 'vue-google-login'
 
   export default {
-    name: 'Login',
+    name: 'GoogleAuthButton',
     components: {
       GoogleLogin
     },
@@ -73,9 +73,9 @@
     &__icon {
       @include flex-center;
       width: 50px;
-      border: 2px solid $color-blue;
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
+      background: white;
 
       img {
         width: 25px;
@@ -87,14 +87,13 @@
       border: none;
       outline: none;
       font-size: 20px;
-      font-weight: bold;
       padding-left: 20px;
       padding-right: 20px;
-      background-color: $color-blue;
-      color: $color-white;
+      background-color: white;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       cursor: pointer;
+      color: $color-black;
     }
   }
 </style>
