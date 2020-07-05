@@ -72,6 +72,17 @@
     border-radius: 5px;
     border: 1px solid $color-black;
     max-width: 265px;
+    background-color: $color-white;
+
+    &:hover {
+      button {
+        opacity: 0.7;
+      }
+
+      img {
+        opacity: 0.7;
+      }
+    }
 
     &__icon {
       @include flex-center;
