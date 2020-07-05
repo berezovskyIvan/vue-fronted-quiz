@@ -3,9 +3,15 @@
     div(style="margin-right: 50px")
       h1.main-quiz-page__header {{ header }}
       .main-quiz-page__body {{ body }}
-      i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px", @click="enterQuiz")
+      i-button(
+        :value="buttonText"
+        background-color="#212121"
+        color="#fef9ff"
+        height="50px"
+        @click="enterQuiz"
+      )
 
-    img.main-quiz-page__img(:src="imagePath")
+    img.main-quiz-page__image(:src="imagePath")
 </template>
 
 <script>
@@ -70,6 +76,11 @@
     &__body {
       max-width: 500px;
       margin-bottom: 20px;
+    }
+
+    &__image {
+      max-width: 400px;
+      max-height: 400px;
     }
   }
 </style>

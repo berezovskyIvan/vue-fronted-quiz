@@ -40,6 +40,7 @@ export default {
 
   html {
     font-family: Helvetica;
+    color: $color-black;
   }
 
   body {

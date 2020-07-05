@@ -5,14 +5,26 @@
     template(v-else)
       .dashboard__content
         .dashboard__content__header
-          h1.dashboard__content__header__title My admin dashboard
+          i-button.dashboard__content__header__back-button(
+            height="50px"
+            width="50px"
+            background-color="white"
+            round
+            @click="goBack"
+          )
+            template(slot="content")
+              i-svg-icon(icon="back" font-size="20px")
+          h1.dashboard__content__header__title Admin dashboard
           google-auth-button.dashboard__content__header__logout-button
         .dashboard__content__body
           .dashboard__content__body__button-block
-            i-button(value="Create quiz"
-              background-color="#f5f5f5"
+            i-button(
+              value="Create quiz"
+              background-color="#212121"
+              color="white"
               height="45px"
-              @click="openModal")
+              @click="openModal"
+            )
         my-quizzes
 </template>
 
@@ -23,6 +35,7 @@
   import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
   import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
   import QuizModal from '@/pages/Dashboard/QuizModal'
+  import ISvgIcon from '@/components/IComponents/ISvgIcon'
   import { mapState } from 'vuex'
 
   export default {
@@ -32,7 +45,8 @@
       ILoader,
       IButton,
       MyQuizzes,
-      GoogleAuthButton
+      GoogleAuthButton,
+      ISvgIcon
     },
     data () {
       return {
@@ -81,6 +95,9 @@
         }
 
         this.$store.dispatch('modal/open', obj)
+      },
+      goBack () {
+        this.$router.go(-1)
       }
     },
     beforeMount () {
@@ -106,12 +123,45 @@
       align-items: center;
 
       &__header {
+        position: absolute;
         width: 100%;
-        height: 120px;
+        height: 100px;
+        background-color: $color-black;
+        color: white;
+
+        &__back-button {
+          position: absolute;
+          top: 20px;
+          left: 50px;
+          background-color: $color-white;
+        }
+
+        .i-button {
+          &:hover {
+            opacity: 1;
+
+            >>> {
+              .i-svg-icon {
+                z-index: 1;
+                fill: $color-white;
+              }
+            }
+
+            &:before {
+              content: '';
+              position: absolute;
+              height: 42px;
+              width: 42px;
+              border-radius: 50%;
+              background-color: $color-black;
+            }
+          }
+        }
 
         &__title {
           @include flex-center;
-          font-size: 30px;
+          font-size: 32px;
+          font-weight: bold;
           height: 50px;
         }
 
@@ -126,10 +176,10 @@
         display: flex;
         width: 700px;
         margin-bottom: 20px;
+        margin-top: 150px;
 
         &__button-block {
           @include flex-center;
-          background: white;
           height: 90px;
           width: 700px;
           border-radius: 10px;

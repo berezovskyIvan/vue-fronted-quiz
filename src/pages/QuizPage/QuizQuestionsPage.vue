@@ -9,7 +9,7 @@
           v-html="item.text"
           @click="showQuestionResult(item.value)")
 
-    img.quiz-questions-page__img(:src="imagePath")
+    img.quiz-questions-page__image(:src="imagePath")
 </template>
 
 <script>
@@ -106,37 +106,54 @@
 
     &__body {
       max-width: 500px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     &__answers {
       display: flex;
       flex-wrap: wrap;
       width: 681px;
-      border-radius: 20px;
-      border: 1px solid $color-silver;
+      border-radius: 5px;
+      border: 1px solid $color-black;
 
       &__el {
         @include flex-center;
-        height: 100px;
+        flex-direction: column;
+        min-height: 100px;
         width: 300px;
         padding-left: 20px;
         padding-right: 20px;
         cursor: pointer;
 
+        >>> {
+          b {
+            margin-bottom: 10px;
+          }
+        }
+
+        &:hover {
+          background-color: $color-black;
+          color: $color-white;
+        }
+
         &:nth-child(1) {
-          border-right: 1px solid $color-silver;
-          border-bottom: 1px solid $color-silver;
+          border-right: 1px solid $color-black;
+          border-bottom: 1px solid $color-black;
         }
 
         &:nth-child(2) {
-          border-bottom: 1px solid $color-silver;
+          border-bottom: 1px solid $color-black;
         }
 
         &:nth-child(3) {
-          border-right: 1px solid $color-silver;
+          border-right: 1px solid $color-black;
         }
       }
+    }
+
+    &__image {
+      max-height: 400px;
+      max-width: 400px;
     }
   }
 </style>

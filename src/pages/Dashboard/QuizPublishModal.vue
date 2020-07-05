@@ -3,13 +3,13 @@
     .test-el__input
       .test-el__input__info-msg Ключ должен начинаться с латинской буквы. Может содеражть в себе только латинские буквы, цифры и символ "-"
       i-input(v-model="key.model" :placeholder="key.placeholder" :width="400" @enter="enter")
-      .test-el__input__err-msg(v-if="haveError") {{ errorText }}
+      .test-el__input__err-msg(v-if="haveError") Некорректное наименование ключа
     i-button(value="Publish"
-      background-color="white"
+      background-color="#212121"
+      color="white"
       :height="50"
       :width="135"
-      have-border
-      :loading="pusblishLoading"
+      :loading="publishLoading"
       :disabled="disabled"
       @click="click")
 </template>
@@ -20,7 +20,7 @@
   import { mapState } from 'vuex'
 
   export default {
-    name: 'QuizModal',
+    name: 'QuizPublishModal',
     components: {
       IInput,
       IButton
@@ -31,8 +31,7 @@
           placeholder: 'Введите ключ страницы quiz',
           model: ''
         },
-        conflictKeyError: false,
-        pusblishLoading: false
+        publishLoading: false
       }
     },
     computed: {
@@ -43,18 +42,6 @@
         return !this.key.model
       },
       haveError () {
-        return this.urlError || this.conflictKeyError
-      },
-      errorText () {
-        if (this.urlError) {
-          return 'Ошибка в наименовании ключа'
-        } else if (this.conflictKeyError) {
-          return 'Ключ с таким наименованием уже существует'
-        }
-
-        return ''
-      },
-      urlError () {
         if (!this.key.model) {
           return false
         } else {
@@ -73,7 +60,7 @@
         }
       },
       publishQuiz () {
-        this.pusblishLoading = true
+        this.publishLoading = true
 
         const obj = {
           sheetId: this.modal.data.sheet_id,
@@ -91,11 +78,18 @@
             })
           }
 
-          this.pusblishLoading = false
+          this.publishLoading = false
           this.$root.$emit('closeModal')
         }).catch(err => {
           if (err && err.response && err.response.data) {
             console.error(err.response.data)
+
+            const notifyData = {
+              type: 'error',
+              val: err.response.data
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
           } else {
             console.error(err)
           }
@@ -106,7 +100,7 @@
             this.$root.$emit('closeModal')
           }
 
-          this.pusblishLoading = false
+          this.publishLoading = false
         })
       }
     }

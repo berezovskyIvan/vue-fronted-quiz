@@ -6,7 +6,7 @@
       .quiz-result-page__social-links
         a.quiz-result-page__social-links__item(v-for="(item, index) in socialLinks" :key="index" :href="getSocialUrl(item)")
           img(:src="`/src/images/icons/${item}.svg`")
-    img.quiz-result-page__img(:src="imagePath")
+    img.quiz-result-page__image(:src="imagePath")
 </template>
 
 <script>
@@ -112,6 +112,11 @@
           height: 30px;
         }
       }
+    }
+
+    &__image {
+      max-height: 400px;
+      max-width: 400px;
     }
   }
 </style>

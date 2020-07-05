@@ -6,8 +6,8 @@
     i-button(value="Sync"
       :height="45"
       :width="88"
-      have-border
-      background-color="white"
+      background-color="#212121"
+      color="white"
       :disabled="disabled"
       :loading="btnLoading"
       @click="click")
@@ -140,8 +140,16 @@
             console.error(err)
           }
 
+          const notifyData = {
+            type: 'error',
+            val: err && err.response && err.response.data
+              ? err.response.data
+              : err
+          }
+
+          this.$store.dispatch('notify/open', notifyData)
+
           this.btnLoading = false
-          this.errorLoading = true
         })
       }
     },

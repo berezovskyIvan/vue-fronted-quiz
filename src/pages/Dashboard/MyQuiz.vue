@@ -16,14 +16,15 @@
       span.my-quiz__attr__title Document number
       span.my-quiz__attr__value {{ item.sheet_id }}
     .my-quiz__buttons
-      i-button(value="Sync" background-color="#f5f5f5" height="45px" @click="updateQuiz")
-      i-button(v-if="!item.is_publish" value="Publish" background-color="#f5f5f5" height="45px" @click="publishQuiz")
+      i-button(value="Sync" background-color="white" have-border height="45px" @click="updateQuiz")
+      i-button(v-if="!item.is_publish" value="Publish" background-color="white" have-border height="45px" @click="publishQuiz")
       i-button(
         v-else
         value="Stop publishing"
-        background-color="#f5f5f5"
+        background-color="white"
         height="45px"
-        width="162px"
+        width="190px"
+        have-border
         :loading="loading.stopPublish"
         @click="stopPublishingQuiz"
       )
@@ -144,9 +145,9 @@
     box-sizing: border-box;
     width: 700px;
     padding: 30px;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    border: 1px solid $color-black;
 
     &--loading {
       display: flex;
@@ -167,12 +168,13 @@
           height: 28px;
           width: 28px;
           border-radius: 50%;
-          background-color: $color-silver-light;
+          background-color: $color-black;
         }
 
         >>> {
           .i-svg-icon {
             z-index: 1;
+            fill: $color-white;
           }
         }
       }

@@ -184,7 +184,6 @@
 
   .quiz-page {
     padding-top: 50px;
-    padding-left: 50px;
 
     &--loading {
       @include flex-center;

@@ -69,6 +69,9 @@
   .login-button {
     display: flex;
     height: 50px;
+    border-radius: 5px;
+    border: 1px solid $color-black;
+    max-width: 265px;
 
     &__icon {
       @include flex-center;
@@ -76,6 +79,7 @@
       border-top-left-radius: 5px;
       border-bottom-left-radius: 5px;
       background: white;
+      border-right: 1px solid $color-black;
 
       img {
         width: 25px;
@@ -86,7 +90,8 @@
     button {
       border: none;
       outline: none;
-      font-size: 20px;
+      font-size: 18px;
+      font-weight: bold;
       padding-left: 20px;
       padding-right: 20px;
       background-color: white;

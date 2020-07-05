@@ -3,8 +3,14 @@
     div(style="margin-right: 50px")
       h1.question-result-page__header {{ header }}
       .question-result-page__body {{ text }}
-      i-button(:value="buttonText" have-border background-color="#f5f5f5" height="50px" @click="next")
-    img.question-result-page__img(:src="imagePath")
+      i-button(
+        :value="buttonText"
+        background-color="#212121"
+        color="#fef9ff"
+        height="50px"
+        @click="next"
+      )
+    img.question-result-page__image(:src="imagePath")
 </template>
 
 <script>
@@ -88,6 +94,11 @@
     &__body {
       max-width: 500px;
       margin-bottom: 20px;
+    }
+
+    &__image {
+      max-height: 400px;
+      max-width: 400px;
     }
   }
 </style>

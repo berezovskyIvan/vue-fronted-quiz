@@ -108,10 +108,10 @@
     width: fit-content;
     padding-left: 25px;
     padding-right: 25px;
-    border-radius: 8px;
-    font-weight: 500;
+    border-radius: 5px;
     box-sizing: border-box;
     cursor: pointer;
+    font-weight: bold;
 
     &:hover {
       opacity: 0.8;

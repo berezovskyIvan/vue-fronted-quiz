@@ -124,14 +124,32 @@
 
       &--loading {
         @include flex-center;
-        // height: 100%;
       }
 
       &__close-button {
+        @include flex-center;
         position: absolute;
         top: 15px;
         right: 15px;
         color: $color-silver-dark;
+
+        &:hover {
+          &:before {
+            content: '';
+            position: absolute;
+            height: 29px;
+            width: 29px;
+            border-radius: 50%;
+            background-color: $color-black;
+          }
+
+          >>> {
+            .i-svg-icon {
+              z-index: 1;
+              fill: white;
+            }
+          }
+        }
       }
     }
   }
