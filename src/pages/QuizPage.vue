@@ -1,17 +1,31 @@
 <template lang="pug">
   .quiz-page(:class="{ 'quiz-page--loading': loading } ")
+
     i-loader(v-if="loading")
 
-    template(v-else-if="!loading && !isResultPage")
+    .quiz-page__header(v-else)
+      .quiz-page__header__current-page
+        span(v-if="!quizIsEnter && !isResultPage") Добро пожаловать
+        span(v-else-if="!isResultPage") {{ `Вопрос № ${currentPage + 1} / ${questionsCount}` }}
+        span(v-else) Поздравляем тест завершён
+
+    .quiz-page__body(v-if="!loading && !isResultPage")
       quiz-main-page(v-if="!quizIsEnter" @enter-quiz="enterQuiz")
 
       template(v-else)
-        quiz-questions-page(v-if="!showQuestionResultPage" :current-page="currentPage" @show-question-result="showQuestionResult")
-        question-result-page(v-else
+        quiz-questions-page(
+          v-if="!showQuestionResultPage"
+          :current-page="currentPage"
+          @show-question-result="showQuestionResult"
+        )
+
+        question-result-page(
+          v-else
           :current-page="currentPage"
           :correct-answer="correctAnswer"
           @next-question="nextQuestion"
-          @show-result="showResult")
+          @show-result="showResult"
+        )
 
     router-view
 </template>
@@ -39,7 +53,8 @@
         totalPoints: 0,
         quizIsEnter: false,
         correctAnswer: false,
-        showQuestionResultPage: false
+        showQuestionResultPage: false,
+        questionsCount: config.questionsCount
       }
     },
     computed: {
@@ -183,10 +198,28 @@
   @import '~s/global';
 
   .quiz-page {
-    padding-top: 50px;
-
     &--loading {
       @include flex-center;
+    }
+
+    &__header {
+      @include flex-center;
+      position: absolute;
+      height: 100px;
+      width: 100%;
+      left: 0;
+      right: 0;
+      background-color: $color-black;
+
+      &__current-page {
+        font-size: 24px;
+        font-weight: bold;
+        color: $color-white;
+      }
+    }
+
+    &__body {
+      margin-top: 150px;
     }
   }
 </style>

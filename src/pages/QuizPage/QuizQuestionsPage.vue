@@ -1,7 +1,6 @@
 <template lang="pug">
   .quiz-questions-page
     div(style="margin-right: 50px")
-      h3.quiz-questions-page__title {{ `Вопрос № ${currentPage + 1} / ${questionsCount}` }}
       .quiz-questions-page__body {{ body }}
       .quiz-questions-page__answers
         .quiz-questions-page__answers__el(v-for="(item, index) in answers"
@@ -27,11 +26,6 @@
       currentPage: {
         type: Number,
         required: true
-      }
-    },
-    data () {
-      return {
-        questionsCount: config.questionsCount
       }
     },
     computed: {
@@ -112,7 +106,7 @@
     &__answers {
       display: flex;
       flex-wrap: wrap;
-      width: 681px;
+      width: 500px;
       border-radius: 5px;
       border: 1px solid $color-black;
 
@@ -120,7 +114,7 @@
         @include flex-center;
         flex-direction: column;
         min-height: 100px;
-        width: 300px;
+        width: 209px;
         padding-left: 20px;
         padding-right: 20px;
         cursor: pointer;
@@ -154,6 +148,7 @@
     &__image {
       max-height: 400px;
       max-width: 400px;
+      margin-left: auto;
     }
   }
 </style>

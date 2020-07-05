@@ -72,7 +72,7 @@
     border-radius: 5px;
     border: 1px solid $color-black;
     max-width: 265px;
-    background-color: $color-white;
+    background-color: white;
 
     &:hover {
       button {

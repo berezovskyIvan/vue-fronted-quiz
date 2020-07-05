@@ -91,6 +91,7 @@
 <style lang="scss" scoped>
   .quiz-result-page {
     display: flex;
+    margin-top: 150px;
 
     &__body {
       max-width: 500px;
@@ -102,14 +103,19 @@
 
       &__item {
         cursor: pointer;
+        transition: transform 1500ms;
 
         &:first-child {
           margin-right: 15px;
         }
 
         img {
-          width: 30px;
-          height: 30px;
+          width: 35px;
+          height: 35px;
+        }
+
+        &:hover {
+          transform: rotate(360deg);
         }
       }
     }
@@ -117,6 +123,7 @@
     &__image {
       max-height: 400px;
       max-width: 400px;
+      margin-left: auto;
     }
   }
 </style>

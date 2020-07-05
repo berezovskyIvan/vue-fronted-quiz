@@ -99,6 +99,7 @@
     &__image {
       max-height: 400px;
       max-width: 400px;
+      margin-left: auto;
     }
   }
 </style>

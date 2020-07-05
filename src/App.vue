@@ -9,9 +9,11 @@
 import { mapState } from 'vuex'
 import IModalWindow from '@/components/IComponents/IModalWindow'
 import INotify from '@/components/IComponents/INotify'
+import AuthMixin from '@/mixins/auth'
 
 export default {
   name: 'App',
+  mixins: [AuthMixin],
   components: {
     IModalWindow,
     INotify
@@ -49,6 +51,6 @@ export default {
 
   #app {
     display: grid;
-    max-width: 1000px;
+    width: 1000px;
   }
 </style>
