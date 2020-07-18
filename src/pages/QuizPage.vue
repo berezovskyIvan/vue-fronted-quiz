@@ -157,6 +157,7 @@
         this.showQuestionResultPage = false
         const variant = this.getValue(this.sheetData.total)
 
+        this.$gtm.push({ event: 'quiz-passed' })
         this.$router.push({
           name: 'quiz-result',
           params: {
@@ -164,6 +165,7 @@
             variant
           }
         })
+
         sessionStorage.removeItem('quizParameters')
       },
       getValue (val) {

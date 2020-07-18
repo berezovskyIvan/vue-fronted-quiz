@@ -15,10 +15,16 @@ import 'babel-polyfill'
   axios configs
  */
 import '@/axios'
+
 /*
   google auth
  */
 import '@/auth'
+
+/*
+  google tag manager
+ */
+import '@/tag-manager'
 
 new Vue({
   el: '#app',

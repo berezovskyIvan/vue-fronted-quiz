@@ -62,6 +62,7 @@
       },
       enterQuiz ($event) {
         this.$emit('enter-quiz', $event)
+        this.$gtm.push({ event: 'quiz-has-started' })
       }
     }
   }

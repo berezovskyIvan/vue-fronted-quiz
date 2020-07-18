@@ -57,6 +57,7 @@
             }
 
             this.$store.dispatch('notify/open', notifyData)
+            this.$gtm.push({ event: 'delete-quiz' })
             this.deleteLoading = false
           }
 

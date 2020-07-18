@@ -92,6 +92,7 @@
             }
 
             this.$store.dispatch('notify/open', notifyData)
+            this.$gtm.push({ event: 'create-quiz' })
           }
 
           this.btnLoading = false
@@ -129,6 +130,7 @@
             }
 
             this.$store.dispatch('notify/open', notifyData)
+            this.$gtm.push({ event: 'update-quiz' })
           }
 
           this.btnLoading = false

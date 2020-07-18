@@ -4,7 +4,11 @@
       h1.quiz-result-page__header {{ header }}
       .quiz-result-page__body {{ body }}
       .quiz-result-page__social-links
-        a.quiz-result-page__social-links__item(v-for="(item, index) in socialLinks" :key="index" :href="getSocialUrl(item)")
+        a.quiz-result-page__social-links__item(
+          v-for="(item, index) in socialLinks"
+          :key="index"
+          :href="getSocialUrl(item)"
+          )
           img(:src="`/src/images/icons/${item}.svg`")
     img.quiz-result-page__image(:src="imagePath")
 </template>

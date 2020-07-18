@@ -76,6 +76,8 @@
                 key: obj.key
               }
             })
+
+            this.$gtm.push({ event: 'publish-quiz' })
           }
 
           this.publishLoading = false

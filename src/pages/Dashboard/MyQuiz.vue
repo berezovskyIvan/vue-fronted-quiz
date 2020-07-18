@@ -120,6 +120,7 @@
             }
 
             this.$store.dispatch('notify/open', notifyData)
+            this.$gtm.push({ event: 'stop-publish-quiz' })
           }
 
           this.loading.stopPublish = false

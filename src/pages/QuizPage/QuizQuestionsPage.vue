@@ -87,6 +87,11 @@
         }
 
         this.$emit('show-question-result', obj)
+
+        const page = this.currentPage + 1
+        const event = `passed question №${page}`
+
+        this.$gtm.push({ event })
       }
     }
   }
