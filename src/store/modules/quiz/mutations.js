@@ -9,7 +9,7 @@ export default {
     if (arr && arr.length) {
       state.my = arr
     } else {
-     state.my = []
+      state.my = []
     }
   },
   [types.getByKey] (state, obj) {

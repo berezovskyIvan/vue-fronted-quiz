@@ -15,73 +15,73 @@
 </template>
 
 <script>
-  import config from '#/config'
-  import IButton from '@/components/IComponents/IButton'
-  import { mapState } from 'vuex'
+import config from '#/config'
+import IButton from '@/components/IComponents/IButton'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'QuizMainPage',
-    components: {
-      IButton
+export default {
+  name: 'QuizMainPage',
+  components: {
+    IButton
+  },
+  computed: {
+    ...mapState({
+      info: state => state.quiz.current.main_page
+    }),
+    sheetData () {
+      return config.sheetData.mainPage
     },
-    computed: {
-      ...mapState({
-        info: state => state.quiz.current.main_page
-      }),
-      sheetData () {
-        return config.sheetData.mainPage
-      },
-      header () {
-        return this.getValue(this.sheetData.header)
-      },
-      body () {
-        return this.getValue(this.sheetData.body)
-      },
-      imagePath () {
-        return this.getValue(this.sheetData.image)
-      },
-      buttonText () {
-        return this.getValue(this.sheetData.buttonText)
-      }
+    header () {
+      return this.getValue(this.sheetData.header)
     },
-    methods: {
-      getValue (val) {
-        const data = this.info.find(item => {
-          if (!item || !item.length || item.length < 2 || !val) {
-            return false
-          }
-
-          return item[0].toLowerCase() === val.toLowerCase()
-        })
-
-        if (data && data.length && data.length > 1) {
-          return data[1]
+    body () {
+      return this.getValue(this.sheetData.body)
+    },
+    imagePath () {
+      return this.getValue(this.sheetData.image)
+    },
+    buttonText () {
+      return this.getValue(this.sheetData.buttonText)
+    }
+  },
+  methods: {
+    getValue (val) {
+      const data = this.info.find(item => {
+        if (!item || !item.length || item.length < 2 || !val) {
+          return false
         }
 
-        return ''
-      },
-      enterQuiz ($event) {
-        this.$emit('enter-quiz', $event)
-        this.$gtm.push({ event: 'quiz-has-started' })
+        return item[0].toLowerCase() === val.toLowerCase()
+      })
+
+      if (data && data.length && data.length > 1) {
+        return data[1]
       }
+
+      return ''
+    },
+    enterQuiz ($event) {
+      this.$emit('enter-quiz', $event)
+      this.$gtm.push({ event: 'quiz-has-started' })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .main-quiz-page {
-    display: flex;
+.main-quiz-page {
+  display: flex;
 
-    &__body {
-      max-width: 500px;
-      margin-bottom: 20px;
-    }
-
-    &__image {
-      max-width: 400px;
-      max-height: 400px;
-    }
+  &__body {
+    max-width: 500px;
+    margin-bottom: 20px;
   }
+
+  &__image {
+    max-width: 400px;
+    max-height: 400px;
+  }
+}
 </style>

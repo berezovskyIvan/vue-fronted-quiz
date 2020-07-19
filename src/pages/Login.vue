@@ -7,30 +7,30 @@
 </template>
 
 <script>
-  import AuthMixin from '@/mixins/auth'
-  import ILoader from '@/components/IComponents/ILoader'
-  import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
+import AuthMixin from '@/mixins/auth'
+import ILoader from '@/components/IComponents/ILoader'
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
 
-  export default {
-    name: 'Login',
-    mixins: [AuthMixin],
-    components: {
-      ILoader,
-      GoogleAuthButton
-    }
-  }
+export default {
+  name: 'Login',
+  components: {
+    ILoader,
+    GoogleAuthButton
+  },
+  mixins: [AuthMixin]
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .login {
-    padding-top: 50px;
-    padding-left: 50px;
+.login {
+  padding-top: 50px;
+  padding-left: 50px;
 
-    &--loading {
-      @include flex-center;
-      height: 100%;
-    }
+  &--loading {
+    @include flex-center;
+    height: 100%;
   }
+}
 </style>

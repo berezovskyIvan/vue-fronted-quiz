@@ -16,141 +16,141 @@
 </template>
 
 <script>
-  import ILoader from '@/components/IComponents/ILoader'
-  import IButton from '@/components/IComponents/IButton'
-  import ISvgIcon from '@/components/IComponents/ISvgIcon'
-  import { mapState } from 'vuex'
-  import { getNumeric, getStr } from '@/utlis'
+import ILoader from '@/components/IComponents/ILoader'
+import IButton from '@/components/IComponents/IButton'
+import ISvgIcon from '@/components/IComponents/ISvgIcon'
+import { mapState } from 'vuex'
+import { getNumeric, getStr } from '@/utlis'
 
-  export default {
-    name: 'IModalWindow',
-    components: {
-      ILoader,
-      IButton,
-      ISvgIcon
+export default {
+  name: 'IModalWindow',
+  components: {
+    ILoader,
+    IButton,
+    ISvgIcon
+  },
+  data () {
+    return {
+      animation: false
+    }
+  },
+  computed: {
+    ...mapState({
+      modalWindow: state => state.modal
+    }),
+    strWidth () {
+      return getStr(this.modalWindow.width)
     },
-    data () {
+    strHeight () {
+      return getStr(this.modalWindow.height)
+    },
+    numericWidth () {
+      return getNumeric(this.modalWindow.width)
+    },
+    numericHeight () {
+      return getNumeric(this.modalWindow.height)
+    },
+    style () {
       return {
-        animation: false
+        width: this.strWidth,
+        height: this.strHeight,
+        visibility: this.animation ? 'hidden' : 'visible'
+      }
+    }
+  },
+  beforeMount () {
+    addEventListener('keydown', this.keydownHandler)
+    this.$root.$on('closeModal', this.close)
+  },
+  beforeDestroy () {
+    removeEventListener('keydown', this.keydownHandler)
+    this.$root.$off('closeModal', this.close)
+  },
+  methods: {
+    keydownHandler ($event) {
+      if ($event.code === 'Escape') {
+        this.close()
       }
     },
-    computed: {
-      ...mapState({
-        modalWindow: state => state.modal
-      }),
-      strWidth () {
-        return getStr(this.modalWindow.width)
-      },
-      strHeight () {
-        return getStr(this.modalWindow.height)
-      },
-      numericWidth () {
-        return getNumeric(this.modalWindow.width)
-      },
-      numericHeight () {
-        return getNumeric(this.modalWindow.height)
-      },
-      style () {
-        return {
-          width: this.strWidth,
-          height: this.strHeight,
-          visibility: this.animation ? 'hidden' : 'visible'
-        }
-      }
-    },
-    methods: {
-      keydownHandler ($event) {
-        if ($event.code === 'Escape') {
-          this.close()
-        }
-      },
-      close () {
-        this.animation = true
+    close () {
+      this.animation = true
 
-        setTimeout(() => {
-          this.$store.dispatch('modal/close')
-          this.animation = false
-        }, 500)
-      }
-    },
-    beforeMount () {
-      addEventListener('keydown', this.keydownHandler)
-      this.$root.$on('closeModal', this.close)
-    },
-    beforeDestroy () {
-      removeEventListener('keydown', this.keydownHandler)
-      this.$root.$off('closeModal', this.close)
+      setTimeout(() => {
+        this.$store.dispatch('modal/close')
+        this.animation = false
+      }, 500)
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
-  @import '~s/icons';
+@import '~s/global';
+@import '~s/icons';
 
-  @keyframes close-modal {
-    from {
-      background-color: rgba(0, 0, 0, 0.55);
-    }
-
-    to {
-      background-color: rgba(0, 0, 0, 0);
-    }
+@keyframes close-modal {
+  from {
+    background-color: rgba(0, 0, 0, 0.55);
   }
 
-  .i-modal-background {
-    position: fixed;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.55);
+  to {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
 
-    &--close-animation {
-      animation: close-modal 500ms;
+.i-modal-background {
+  position: fixed;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+
+  &--close-animation {
+    animation: close-modal 500ms;
+  }
+
+  &__window {
+    position: sticky;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background-color: $color-white;
+    padding: 30px;
+
+    &--loading {
+      @include flex-center;
     }
 
-    &__window {
-      position: sticky;
-      box-sizing: border-box;
-      border-radius: 10px;
-      background-color: $color-white;
-      padding: 30px;
+    &__close-button {
+      @include flex-center;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      color: $color-silver-dark;
 
-      &--loading {
-        @include flex-center;
-      }
+      &:hover {
+        &:before {
+          content: '';
+          position: absolute;
+          height: 29px;
+          width: 29px;
+          border-radius: 50%;
+          background-color: $color-black;
+        }
 
-      &__close-button {
-        @include flex-center;
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        color: $color-silver-dark;
-
-        &:hover {
-          &:before {
-            content: '';
-            position: absolute;
-            height: 29px;
-            width: 29px;
-            border-radius: 50%;
-            background-color: $color-black;
-          }
-
-          >>> {
-            .i-svg-icon {
-              z-index: 1;
-              fill: white;
-            }
+        >>> {
+          .i-svg-icon {
+            z-index: 1;
+            fill: white;
           }
         }
       }
     }
   }
+}
 </style>

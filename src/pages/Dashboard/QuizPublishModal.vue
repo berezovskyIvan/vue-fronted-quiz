@@ -15,120 +15,120 @@
 </template>
 
 <script>
-  import IInput from '@/components/IComponents/IInput'
-  import IButton from '@/components/IComponents/IButton'
-  import { mapState } from 'vuex'
+import IInput from '@/components/IComponents/IInput'
+import IButton from '@/components/IComponents/IButton'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'QuizPublishModal',
-    components: {
-      IInput,
-      IButton
-    },
-    data () {
-      return {
-        key: {
-          placeholder: 'Введите ключ страницы quiz',
-          model: ''
-        },
-        publishLoading: false
-      }
-    },
-    computed: {
-      ...mapState({
-        modal: state => state.modal
-      }),
-      disabled () {
-        return !this.key.model
+export default {
+  name: 'QuizPublishModal',
+  components: {
+    IInput,
+    IButton
+  },
+  data () {
+    return {
+      key: {
+        placeholder: 'Введите ключ страницы quiz',
+        model: ''
       },
-      haveError () {
-        if (!this.key.model) {
-          return false
-        } else {
-          const req = /^[a-z][a-z0-9-]*$/i
-          return !req.test(this.key.model)
-        }
-      }
+      publishLoading: false
+    }
+  },
+  computed: {
+    ...mapState({
+      modal: state => state.modal
+    }),
+    disabled () {
+      return !this.key.model
     },
-    methods: {
-      click () {
-        this.publishQuiz()
-      },
-      enter () {
-        if (!this.disabled) {
-          this.publishQuiz()
-        }
-      },
-      publishQuiz () {
-        this.publishLoading = true
-
-        const obj = {
-          sheetId: this.modal.data.sheet_id,
-          key: this.key.model
-        }
-
-        this.$store.dispatch('quiz/publish', obj).then(res => {
-          if (res && res.data) {
-            this.$store.commit('quiz/publish', obj)
-            this.$router.push({
-              name: 'quiz',
-              params: {
-                key: obj.key
-              }
-            })
-
-            this.$gtm.push({ event: 'publish-quiz' })
-          }
-
-          this.publishLoading = false
-          this.$root.$emit('closeModal')
-        }).catch(err => {
-          if (err && err.response && err.response.data) {
-            console.error(err.response.data)
-
-            const notifyData = {
-              type: 'error',
-              val: err.response.data
-            }
-
-            this.$store.dispatch('notify/open', notifyData)
-          } else {
-            console.error(err)
-          }
-
-          if (err.response && err.response.status === 409) {
-            this.conflictKeyError = true
-          } else {
-            this.$root.$emit('closeModal')
-          }
-
-          this.publishLoading = false
-        })
+    haveError () {
+      if (!this.key.model) {
+        return false
+      } else {
+        const req = /^[a-z][a-z0-9-]*$/i
+        return !req.test(this.key.model)
       }
     }
+  },
+  methods: {
+    click () {
+      this.publishQuiz()
+    },
+    enter () {
+      if (!this.disabled) {
+        this.publishQuiz()
+      }
+    },
+    publishQuiz () {
+      this.publishLoading = true
+
+      const obj = {
+        sheetId: this.modal.data.sheet_id,
+        key: this.key.model
+      }
+
+      this.$store.dispatch('quiz/publish', obj).then(res => {
+        if (res && res.data) {
+          this.$store.commit('quiz/publish', obj)
+          this.$router.push({
+            name: 'quiz',
+            params: {
+              key: obj.key
+            }
+          })
+
+          this.$gtm.push({ event: 'publish-quiz' })
+        }
+
+        this.publishLoading = false
+        this.$root.$emit('closeModal')
+      }).catch(err => {
+        if (err && err.response && err.response.data) {
+          console.error(err.response.data)
+
+          const notifyData = {
+            type: 'error',
+            val: err.response.data
+          }
+
+          this.$store.dispatch('notify/open', notifyData)
+        } else {
+          console.error(err)
+        }
+
+        if (err.response && err.response.status === 409) {
+          this.conflictKeyError = true
+        } else {
+          this.$root.$emit('closeModal')
+        }
+
+        this.publishLoading = false
+      })
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .test-el {
-    display: flex;
-    flex-direction: column;
+.test-el {
+  display: flex;
+  flex-direction: column;
 
-    &__input {
-      height: 140px;
+  &__input {
+    height: 140px;
 
-      &__info-msg {
-        margin-bottom: 10px;
-        margin-left: 5px;
-      }
+    &__info-msg {
+      margin-bottom: 10px;
+      margin-left: 5px;
+    }
 
-      &__err-msg {
-        margin-top: 10px;
-        margin-left: 5px;
-        color: $color-red;
-      }
+    &__err-msg {
+      margin-top: 10px;
+      margin-left: 5px;
+      color: $color-red;
     }
   }
+}
 </style>

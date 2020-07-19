@@ -12,148 +12,148 @@
 </template>
 
 <script>
-  import config from '#/config'
-  import IButton from '@/components/IComponents/IButton'
-  import { mapState } from 'vuex'
-  import { getColumnConfig } from '@/utlis'
+import config from '#/config'
+import IButton from '@/components/IComponents/IButton'
+import { mapState } from 'vuex'
+import { getColumnConfig } from '@/utlis'
 
-  export default {
-    name: 'QuizQuestionsPage',
-    components: {
-      IButton
+export default {
+  name: 'QuizQuestionsPage',
+  components: {
+    IButton
+  },
+  props: {
+    currentPage: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    ...mapState({
+      info: state => state.quiz.current.questions_page
+    }),
+    sheetData () {
+      const obj = config.sheetData.questionsPage
+      return obj.question
     },
-    props: {
-      currentPage: {
-        type: Number,
-        required: true
-      }
+    body () {
+      return this.getValue(this.sheetData.body)
     },
-    computed: {
-      ...mapState({
-        info: state => state.quiz.current.questions_page
-      }),
-      sheetData () {
-        const obj = config.sheetData.questionsPage
-        return obj.question
-      },
-      body () {
-        return this.getValue(this.sheetData.body)
-      },
-      imagePath () {
-        return this.getValue(this.sheetData.image)
-      },
-      answers () {
-        let result = []
-
-        for (let x = 0; x < 4; x++) {
-          const textConfig = getColumnConfig(this.sheetData.answerText, x + 1)
-          const valueConfig = getColumnConfig(this.sheetData.answerValue, x + 1)
-          const text = this.getValue(textConfig)
-          const value = this.getValue(valueConfig)
-
-          result.push({
-            text,
-            value
-          })
-        }
-
-        return result
-      }
+    imagePath () {
+      return this.getValue(this.sheetData.image)
     },
-    methods: {
-      getValue (val) {
-        const data = this.info.find(item => {
-          if (!item || !item.length || item.length < 2 || !val) {
-            return false
-          }
+    answers () {
+      const result = []
 
-          return item[0].toLowerCase() === val.toLowerCase()
+      for (let x = 0; x < 4; x++) {
+        const textConfig = getColumnConfig(this.sheetData.answerText, x + 1)
+        const valueConfig = getColumnConfig(this.sheetData.answerValue, x + 1)
+        const text = this.getValue(textConfig)
+        const value = this.getValue(valueConfig)
+
+        result.push({
+          text,
+          value
         })
-
-        if (data && data.length && data.length > 1) {
-          const pageNumber = this.currentPage + 1
-          return data[pageNumber]
-        }
-
-        return ''
-      },
-      showQuestionResult ($event) {
-        const values = this.answers.values(u => Number(u.value))
-        const max = Math.max(values)
-        const answerValueNum = Number($event)
-        const obj = {
-          points: answerValueNum,
-          success: $event === answerValueNum
-        }
-
-        this.$emit('show-question-result', obj)
-
-        const page = this.currentPage + 1
-        const event = `passed question №${page}`
-
-        this.$gtm.push({ event })
       }
+
+      return result
+    }
+  },
+  methods: {
+    getValue (val) {
+      const data = this.info.find(item => {
+        if (!item || !item.length || item.length < 2 || !val) {
+          return false
+        }
+
+        return item[0].toLowerCase() === val.toLowerCase()
+      })
+
+      if (data && data.length && data.length > 1) {
+        const pageNumber = this.currentPage + 1
+        return data[pageNumber]
+      }
+
+      return ''
+    },
+    showQuestionResult ($event) {
+      // const values = this.answers.values(u => Number(u.value))
+      // const max = Math.max(values)
+      const answerValueNum = Number($event)
+      const obj = {
+        points: answerValueNum,
+        success: $event === answerValueNum
+      }
+
+      this.$emit('show-question-result', obj)
+
+      const page = this.currentPage + 1
+      const event = `passed question №${page}`
+
+      this.$gtm.push({ event })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .quiz-questions-page {
+.quiz-questions-page {
+  display: flex;
+
+  &__body {
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+
+  &__answers {
     display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+    border-radius: 5px;
+    border: 1px solid $color-black;
 
-    &__body {
-      max-width: 500px;
-      margin-bottom: 30px;
-    }
+    &__el {
+      @include flex-center;
+      flex-direction: column;
+      min-height: 100px;
+      width: 209px;
+      padding-left: 20px;
+      padding-right: 20px;
+      cursor: pointer;
 
-    &__answers {
-      display: flex;
-      flex-wrap: wrap;
-      width: 500px;
-      border-radius: 5px;
-      border: 1px solid $color-black;
-
-      &__el {
-        @include flex-center;
-        flex-direction: column;
-        min-height: 100px;
-        width: 209px;
-        padding-left: 20px;
-        padding-right: 20px;
-        cursor: pointer;
-
-        >>> {
-          b {
-            margin-bottom: 10px;
-          }
-        }
-
-        &:hover {
-          background-color: $color-black;
-          color: $color-white;
-        }
-
-        &:nth-child(1) {
-          border-right: 1px solid $color-black;
-          border-bottom: 1px solid $color-black;
-        }
-
-        &:nth-child(2) {
-          border-bottom: 1px solid $color-black;
-        }
-
-        &:nth-child(3) {
-          border-right: 1px solid $color-black;
+      >>> {
+        b {
+          margin-bottom: 10px;
         }
       }
-    }
 
-    &__image {
-      max-height: 400px;
-      max-width: 400px;
-      margin-left: auto;
+      &:hover {
+        background-color: $color-black;
+        color: $color-white;
+      }
+
+      &:nth-child(1) {
+        border-right: 1px solid $color-black;
+        border-bottom: 1px solid $color-black;
+      }
+
+      &:nth-child(2) {
+        border-bottom: 1px solid $color-black;
+      }
+
+      &:nth-child(3) {
+        border-right: 1px solid $color-black;
+      }
     }
   }
+
+  &__image {
+    max-height: 400px;
+    max-width: 400px;
+    margin-left: auto;
+  }
+}
 </style>

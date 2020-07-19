@@ -1,5 +1,4 @@
 import types from './types'
-import { updateObjectReactive } from '@/utlis'
 
 export default {
   [types.updateCheckedStatus] (state, val) {

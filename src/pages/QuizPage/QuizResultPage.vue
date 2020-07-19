@@ -14,120 +14,120 @@
 </template>
 
 <script>
-  import config from '#/config'
-  import { mapState } from 'vuex'
+import config from '#/config'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'QuizResultPage',
-    computed: {
-      ...mapState({
-        info: state => state.quiz.current.result_page
-      }),
-      variant () {
-        return this.$route.params.variant
-      },
-      validVariant () {
-        return this.variant > 0 && this.variant <= config.quizResultCount
-      },
-      sheetData () {
-        return config.sheetData.resultPage
-      },
-      header () {
-        if (this.info && this.info.length) {
-          return this.getValue(this.sheetData.header)
-        }
-
-        return ''
-      },
-      body () {
-        if (this.info && this.info.length) {
-          return this.getValue(this.sheetData.body)
-        }
-
-        return ''
-      },
-      imagePath () {
-        if (this.info && this.info.length) {
-          return this.getValue(this.sheetData.image)
-        }
-
-        return ''
-      },
-      socialLinks () {
-        if (this.info && this.info.length) {
-          const val = this.getValue(this.sheetData.socialLinks)
-          const arr = val.split(',')
-          return arr.map(u => u.trim().toLowerCase())
-        }
-
-        return []
-      }
+export default {
+  name: 'QuizResultPage',
+  computed: {
+    ...mapState({
+      info: state => state.quiz.current.result_page
+    }),
+    variant () {
+      return this.$route.params.variant
     },
-    methods: {
-      getValue (val) {
-        const data = this.info.find(item => {
-          if (!item || !item.length || !val) {
-            return false
-          }
+    validVariant () {
+      return this.variant > 0 && this.variant <= config.quizResultCount
+    },
+    sheetData () {
+      return config.sheetData.resultPage
+    },
+    header () {
+      if (this.info && this.info.length) {
+        return this.getValue(this.sheetData.header)
+      }
 
-          return item[0].toLowerCase() === val.toLowerCase() ||
-            item[0].toLowerCase().includes(val.toLowerCase())
-        })
+      return ''
+    },
+    body () {
+      if (this.info && this.info.length) {
+        return this.getValue(this.sheetData.body)
+      }
 
-        if (data && data.length && data.length > 1) {
-          return data[this.variant]
+      return ''
+    },
+    imagePath () {
+      if (this.info && this.info.length) {
+        return this.getValue(this.sheetData.image)
+      }
+
+      return ''
+    },
+    socialLinks () {
+      if (this.info && this.info.length) {
+        const val = this.getValue(this.sheetData.socialLinks)
+        const arr = val.split(',')
+        return arr.map(u => u.trim().toLowerCase())
+      }
+
+      return []
+    }
+  },
+  beforeMount () {
+    if (!this.validVariant) {
+      this.$router.push({ name: 'page-not-found' })
+    }
+  },
+  methods: {
+    getValue (val) {
+      const data = this.info.find(item => {
+        if (!item || !item.length || !val) {
+          return false
         }
 
-        return ''
-      },
-      getSocialUrl (item) {
-        return this.sheetData[item] + `${config.clientUrl}${this.$route.path}`
+        return item[0].toLowerCase() === val.toLowerCase() ||
+          item[0].toLowerCase().includes(val.toLowerCase())
+      })
+
+      if (data && data.length && data.length > 1) {
+        return data[this.variant]
       }
+
+      return ''
     },
-    beforeMount () {
-      if (!this.validVariant) {
-        this.$router.push({ name: 'page-not-found' })
-      }
+    getSocialUrl (item) {
+      return this.sheetData[item] + `${config.clientUrl}${this.$route.path}`
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .quiz-result-page {
+.quiz-result-page {
+  display: flex;
+  margin-top: 150px;
+
+  &__body {
+    max-width: 500px;
+    margin-bottom: 30px;
+  }
+
+  &__social-links {
     display: flex;
-    margin-top: 150px;
 
-    &__body {
-      max-width: 500px;
-      margin-bottom: 30px;
-    }
+    &__item {
+      cursor: pointer;
+      transition: transform 1500ms;
 
-    &__social-links {
-      display: flex;
+      &:first-child {
+        margin-right: 15px;
+      }
 
-      &__item {
-        cursor: pointer;
-        transition: transform 1500ms;
+      img {
+        width: 35px;
+        height: 35px;
+      }
 
-        &:first-child {
-          margin-right: 15px;
-        }
-
-        img {
-          width: 35px;
-          height: 35px;
-        }
-
-        &:hover {
-          transform: rotate(360deg);
-        }
+      &:hover {
+        transform: rotate(360deg);
       }
     }
-
-    &__image {
-      max-height: 400px;
-      max-width: 400px;
-      margin-left: auto;
-    }
   }
+
+  &__image {
+    max-height: 400px;
+    max-width: 400px;
+    margin-left: auto;
+  }
+}
 </style>

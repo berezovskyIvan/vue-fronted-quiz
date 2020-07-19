@@ -4,26 +4,26 @@
 </template>
 
 <script>
-  import MyQuiz from './MyQuiz'
-  import { mapState } from 'vuex'
+import MyQuiz from './MyQuiz'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'MyQuizzes',
-    components: {
-      MyQuiz
-    },
-    computed: {
-      ...mapState({
-        myQuizzes: state => state.quiz.my
-      })
-    }
+export default {
+  name: 'MyQuizzes',
+  components: {
+    MyQuiz
+  },
+  computed: {
+    ...mapState({
+      myQuizzes: state => state.quiz.my
+    })
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .my-quizzes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.my-quizzes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 </style>

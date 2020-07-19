@@ -13,11 +13,11 @@ import AuthMixin from '@/mixins/auth'
 
 export default {
   name: 'App',
-  mixins: [AuthMixin],
   components: {
     IModalWindow,
     INotify
   },
+  mixins: [AuthMixin],
   computed: {
     ...mapState({
       modalWindow: state => state.modal,

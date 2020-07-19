@@ -4,21 +4,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'MainPage'
-  }
+export default {
+  name: 'MainPage'
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .main-page {
-    padding-left: 50px;
-    padding-right: 50px;
+.main-page {
+  padding-left: 50px;
+  padding-right: 50px;
 
-    h1 {
-      @include justify-center;
-      font-size: 30px;
-    }
+  h1 {
+    @include justify-center;
+    font-size: 30px;
   }
+}
 </style>

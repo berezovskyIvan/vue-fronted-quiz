@@ -8,60 +8,60 @@
 </template>
 
 <script>
-  import { SimpleSVG } from 'vue-simple-svg'
-  import { getStr, getNumeric } from '@/utlis'
+import { SimpleSVG } from 'vue-simple-svg'
+import { getStr } from '@/utlis'
 
-  export default {
-    name: 'ISvgIcon',
-    components: {
-      SimpleSVG
+export default {
+  name: 'ISvgIcon',
+  components: {
+    SimpleSVG
+  },
+  props: {
+    icon: {
+      type: String,
+      required: true,
+      default: ''
     },
-    props: {
-      icon: {
-        type: String,
-        required: true,
-        default: false
-      },
-      fontSize: {
-        type: String,
-        required: false,
-        default: '15px'
-      },
-      fill: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      customClassName: {
-        type: String,
-        required: false,
-        default: ''
-      }
+    fontSize: {
+      type: String,
+      required: false,
+      default: '15px'
     },
-    data () {
+    fill: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    customClassName: {
+      type: String,
+      required: false,
+      default: ''
+    }
+  },
+  data () {
+    return {
+      successLoad: false,
+      errorLoad: false
+    }
+  },
+  computed: {
+    path () {
+      return `/src/images/icons/${this.icon}.svg`
+    },
+    strFontSize () {
+      return getStr(this.fontSize)
+    },
+    style () {
       return {
-        successLoad: false,
-        errorLoad: false
-      }
-    },
-    computed: {
-      path () {
-        return `/src/images/icons/${this.icon}.svg`
-      },
-      strFontSize () {
-        return getStr(this.fontSize)
-      },
-      style () {
-        return {
-          fill: this.fill
-        }
+        fill: this.fill
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  .i-svg-icon {
-    display: flex;
-  }
+.i-svg-icon {
+  display: flex;
+}
 </style>

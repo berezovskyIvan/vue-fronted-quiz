@@ -25,7 +25,7 @@ module.exports = {
         body: 'Question Body',
         image: 'Question Image',
         answerText: 'Answer {number} Text',
-        answerValue: 'Answer {number} Value',
+        answerValue: 'Answer {number} Value'
       },
       result: {
         correct: {

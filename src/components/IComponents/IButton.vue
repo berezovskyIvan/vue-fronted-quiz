@@ -11,123 +11,123 @@
 </template>
 
 <script>
-  import ILoader from '@/components/IComponents/ILoader'
-  import { getStr, getNumeric } from '@/utlis'
+import ILoader from '@/components/IComponents/ILoader'
+import { getStr, getNumeric } from '@/utlis'
 
-  export default {
-    name: 'IButton',
-    components: {
-      ILoader
+export default {
+  name: 'IButton',
+  components: {
+    ILoader
+  },
+  props: {
+    value: {
+      type: String,
+      required: false,
+      default: ''
     },
-    props: {
-      value: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      height: {
-        type: [Number, String],
-        required: false,
-        default: ''
-      },
-      width: {
-        type: [Number, String],
-        required: false,
-        default: ''
-      },
-      backgroundColor: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      color: {
-        type: String,
-        required: false,
-        default: ''
-      },
-      haveBorder: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      round: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      disabled: {
-        type: Boolean,
-        required: false,
-        default: false
-      },
-      loading: {
-        type: Boolean,
-        required: false,
-        default: false
+    height: {
+      type: [Number, String],
+      required: false,
+      default: ''
+    },
+    width: {
+      type: [Number, String],
+      required: false,
+      default: ''
+    },
+    backgroundColor: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    color: {
+      type: String,
+      required: false,
+      default: ''
+    },
+    haveBorder: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    round: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
+  computed: {
+    strWidth () {
+      return getStr(this.width)
+    },
+    strHeight () {
+      return getStr(this.height)
+    },
+    numberWidth () {
+      return getNumeric(this.width)
+    },
+    numberHeight () {
+      return getNumeric(this.height)
+    },
+    style () {
+      return {
+        height: this.strHeight,
+        width: this.strWidth,
+        backgroundColor: this.backgroundColor,
+        color: this.color,
+        borderRadius: this.round ? '50%' : '',
+        padding: this.round ? 0 : null
       }
-    },
-    computed: {
-      strWidth () {
-        return getStr(this.width)
-      },
-      strHeight () {
-        return getStr(this.height)
-      },
-      numberWidth () {
-        return getNumeric(this.width)
-      },
-      numberHeight () {
-        return getNumeric(this.height)
-      },
-      style () {
-        return {
-          height: this.strHeight,
-          width: this.strWidth,
-          backgroundColor: this.backgroundColor,
-          color: this.color,
-          borderRadius: this.round ? '50%' : '',
-          padding: this.round ? 0 : null
-        }
-      }
-    },
-    methods: {
-      click ($event) {
-        if (!this.disabled) {
-          this.$emit('click', $event)
-        }
+    }
+  },
+  methods: {
+    click ($event) {
+      if (!this.disabled) {
+        this.$emit('click', $event)
       }
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .i-button {
-    @include flex-center;
-    width: fit-content;
-    padding-left: 25px;
-    padding-right: 25px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    cursor: pointer;
-    font-weight: bold;
+.i-button {
+  @include flex-center;
+  width: fit-content;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &--border {
+    border: 1px solid $color-black;
 
     &:hover {
-      opacity: 0.7;
-    }
-
-    &--border {
-      border: 1px solid $color-black;
-
-      &:hover {
-        border: 1px solid $color-silver-dark;
-      }
-    }
-
-    &--disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
+      border: 1px solid $color-silver-dark;
     }
   }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
 </style>

@@ -29,163 +29,163 @@
 </template>
 
 <script>
-  import AuthMixin from '@/mixins/auth'
-  import ILoader from '@/components/IComponents/ILoader'
-  import IButton from "@/components/IComponents/IButton"
-  import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
-  import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
-  import QuizModal from '@/pages/Dashboard/QuizModal'
-  import ISvgIcon from '@/components/IComponents/ISvgIcon'
-  import { mapState } from 'vuex'
+import AuthMixin from '@/mixins/auth'
+import ILoader from '@/components/IComponents/ILoader'
+import IButton from '@/components/IComponents/IButton'
+import GoogleAuthButton from '@/components/auth/GoogleAuthButton'
+import MyQuizzes from '@/pages/Dashboard/MyQuizzes'
+import QuizModal from '@/pages/Dashboard/QuizModal'
+import ISvgIcon from '@/components/IComponents/ISvgIcon'
+import { mapState } from 'vuex'
 
-  export default {
-    name: 'Dashboard',
-    mixins: [AuthMixin],
-    components: {
-      ILoader,
-      IButton,
-      MyQuizzes,
-      GoogleAuthButton,
-      ISvgIcon
-    },
-    data () {
-      return {
-        myQuizzesLoading: false
-      }
-    },
-    computed: {
-      ...mapState({
-        isSignedIn: state => state.auth.isSignedIn
-      }),
-      loading () {
-        return this.authLoading || this.myQuizzesLoading
-      }
-    },
-    watch: {
-      isSignedIn (val) {
-        if (val) {
-          this.getMyQuizzes()
-        }
-      }
-    },
-    methods: {
-      getMyQuizzes () {
-        this.myQuizzesLoading = true
-
-        this.$store.dispatch('quiz/get-my').then(({ data }) => {
-          this.$store.commit('quiz/get-my', data)
-
-          this.myQuizzesLoading = false
-        }).catch(err => {
-          if (err && err.response && err.response.data) {
-            console.error(err.response.data)
-          } else {
-            console.error(err)
-          }
-
-          this.myQuizzesLoading = false
-        })
-      },
-      openModal () {
-        const obj = {
-          isOpen: true,
-          width: 550,
-          height: 300,
-          component: QuizModal
-        }
-
-        this.$store.dispatch('modal/open', obj)
-      },
-      goBack () {
-        this.$router.go(-1)
-      }
-    },
-    beforeMount () {
-      if (this.isSignedIn) {
+export default {
+  name: 'Dashboard',
+  components: {
+    ILoader,
+    IButton,
+    MyQuizzes,
+    GoogleAuthButton,
+    ISvgIcon
+  },
+  mixins: [AuthMixin],
+  data () {
+    return {
+      myQuizzesLoading: false
+    }
+  },
+  computed: {
+    ...mapState({
+      isSignedIn: state => state.auth.isSignedIn
+    }),
+    loading () {
+      return this.authLoading || this.myQuizzesLoading
+    }
+  },
+  watch: {
+    isSignedIn (val) {
+      if (val) {
         this.getMyQuizzes()
       }
     }
+  },
+  beforeMount () {
+    if (this.isSignedIn) {
+      this.getMyQuizzes()
+    }
+  },
+  methods: {
+    getMyQuizzes () {
+      this.myQuizzesLoading = true
+
+      this.$store.dispatch('quiz/get-my').then(({ data }) => {
+        this.$store.commit('quiz/get-my', data)
+
+        this.myQuizzesLoading = false
+      }).catch(err => {
+        if (err && err.response && err.response.data) {
+          console.error(err.response.data)
+        } else {
+          console.error(err)
+        }
+
+        this.myQuizzesLoading = false
+      })
+    },
+    openModal () {
+      const obj = {
+        isOpen: true,
+        width: 550,
+        height: 300,
+        component: QuizModal
+      }
+
+      this.$store.dispatch('modal/open', obj)
+    },
+    goBack () {
+      this.$router.go(-1)
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
-  @import '~s/global';
+@import '~s/global';
 
-  .dashboard {
-    &--loading {
-      @include flex-center;
-      height: 100%;
-    }
+.dashboard {
+  &--loading {
+    @include flex-center;
+    height: 100%;
+  }
 
-    &__content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-      &__header {
+    &__header {
+      position: absolute;
+      width: 100%;
+      height: 100px;
+      background-color: $color-black;
+      color: white;
+
+      &__back-button {
         position: absolute;
-        width: 100%;
-        height: 100px;
-        background-color: $color-black;
-        color: white;
+        top: 20px;
+        left: 50px;
+        background-color: $color-white;
+      }
 
-        &__back-button {
-          position: absolute;
-          top: 20px;
-          left: 50px;
-          background-color: $color-white;
-        }
+      .i-button {
+        &:hover {
+          opacity: 1;
 
-        .i-button {
-          &:hover {
-            opacity: 1;
-
-            >>> {
-              .i-svg-icon {
-                z-index: 1;
-                fill: $color-white;
-              }
-            }
-
-            &:before {
-              content: '';
-              position: absolute;
-              height: 42px;
-              width: 42px;
-              border-radius: 50%;
-              background-color: $color-black;
+          >>> {
+            .i-svg-icon {
+              z-index: 1;
+              fill: $color-white;
             }
           }
-        }
 
-        &__title {
-          @include flex-center;
-          font-size: 32px;
-          font-weight: bold;
-          height: 50px;
-        }
-
-        &__logout-button {
-          position: absolute;
-          right: 50px;
-          top: 20px;
+          &:before {
+            content: '';
+            position: absolute;
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            background-color: $color-black;
+          }
         }
       }
 
-      &__body {
-        display: flex;
-        width: 700px;
-        margin-bottom: 20px;
-        margin-top: 150px;
+      &__title {
+        @include flex-center;
+        font-size: 32px;
+        font-weight: bold;
+        height: 50px;
+      }
 
-        &__button-block {
-          @include flex-center;
-          height: 90px;
-          width: 700px;
-          border-radius: 10px;
-          border: 1px dashed $color-black;
-        }
+      &__logout-button {
+        position: absolute;
+        right: 50px;
+        top: 20px;
+      }
+    }
+
+    &__body {
+      display: flex;
+      width: 700px;
+      margin-bottom: 20px;
+      margin-top: 150px;
+
+      &__button-block {
+        @include flex-center;
+        height: 90px;
+        width: 700px;
+        border-radius: 10px;
+        border: 1px dashed $color-black;
       }
     }
   }
+}
 </style>
