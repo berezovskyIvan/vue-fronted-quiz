@@ -2,6 +2,7 @@
   "extends": ["vue", "plugin:vue/recommended"],
   "plugins": ["import", "vue", "pug"],
   "rules": {
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-console": "off"
   }
 }

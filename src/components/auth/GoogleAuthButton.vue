@@ -73,6 +73,7 @@ export default {
   border: 1px solid $color-black;
   max-width: 265px;
   background-color: white;
+  margin-left: 5px;
 
   &:hover {
     button {

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .i-notify
+  .i-notify(:style="style")
     span.i-notify__value {{ value }}
     .i-notify__icon-block(:class="`i-notify__icon-block--${type}`")
       i-svg-icon(:icon="type" font-size="17px")
@@ -17,8 +17,14 @@ export default {
   computed: {
     ...mapState({
       value: state => state.notify.val,
-      type: state => state.notify.type
-    })
+      type: state => state.notify.type,
+      width: state => state.notify.width
+    }),
+    style () {
+      return {
+        width: this.width + 'px'
+      }
+    }
   }
 }
 </script>
@@ -47,7 +53,6 @@ export default {
   justify-content: center;
   position: fixed;
   z-index: 1;
-  width: 250px;
   top: 150px;
   right: calc(50% - 700px);
   padding: 20px;

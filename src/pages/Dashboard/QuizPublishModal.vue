@@ -18,6 +18,7 @@
 import IInput from '@/components/IComponents/IInput'
 import IButton from '@/components/IComponents/IButton'
 import { mapState } from 'vuex'
+import { changeStatusPublishQuizDuplicate } from '@/components/messages'
 
 export default {
   name: 'QuizPublishModal',
@@ -84,14 +85,16 @@ export default {
         this.$root.$emit('closeModal')
       }).catch(err => {
         if (err && err.response && err.response.data) {
-          console.error(err.response.data)
+          if (err.response.status === 409) {
+            const notifyData = {
+              type: 'error',
+              val: changeStatusPublishQuizDuplicate(this.key.model)
+            }
 
-          const notifyData = {
-            type: 'error',
-            val: err.response.data
+            this.$store.dispatch('notify/open', notifyData)
           }
 
-          this.$store.dispatch('notify/open', notifyData)
+          console.error(err.response.data)
         } else {
           console.error(err)
         }

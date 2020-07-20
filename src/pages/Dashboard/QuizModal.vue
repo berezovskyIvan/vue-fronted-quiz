@@ -18,7 +18,7 @@ import IInput from '@/components/IComponents/IInput'
 import IButton from '@/components/IComponents/IButton'
 import { mapState } from 'vuex'
 import { getGslUrl } from '@/utlis'
-import { createQuiz, updateQuiz } from '@/components/messages'
+import { createQuiz, updateQuiz, duplicateQuiz } from '@/components/messages'
 
 export default {
   name: 'QuizModal',
@@ -95,13 +95,25 @@ export default {
           }
 
           this.$store.dispatch('notify/open', notifyData)
+          this.$root.$emit('closeModal')
           this.$gtm.push({ event: 'create-quiz' })
         }
 
         this.btnLoading = false
-        this.$root.$emit('closeModal')
       }).catch(err => {
         if (err && err.response && err.response.data) {
+          if (err.response.status === 409) {
+            const urlArr = this.url.model.split('/')
+            const sheetId = urlArr[urlArr.length - 2]
+            const notifyData = {
+              val: duplicateQuiz(sheetId),
+              type: 'error',
+              width: 350
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
+          }
+
           console.error(err.response.data)
         } else {
           console.error(err)
@@ -140,19 +152,19 @@ export default {
         this.$root.$emit('closeModal')
       }).catch(err => {
         if (err && err.response && err.response.data) {
+          if (err.response.status === 409) {
+            const notifyData = {
+              val: duplicateQuiz,
+              type: 'error'
+            }
+
+            this.$store.dispatch('notify/open', notifyData)
+          }
+
           console.error(err.response.data)
         } else {
           console.error(err)
         }
-
-        const notifyData = {
-          type: 'error',
-          val: err && err.response && err.response.data
-            ? err.response.data
-            : err
-        }
-
-        this.$store.dispatch('notify/open', notifyData)
 
         this.btnLoading = false
       })

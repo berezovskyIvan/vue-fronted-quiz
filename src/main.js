@@ -24,7 +24,7 @@ import '@/auth'
 /*
   google tag manager
  */
-import 'vue-tag-manager'
+import '@/tag-manager'
 
 new Vue({
   el: '#app',
