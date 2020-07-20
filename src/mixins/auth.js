@@ -26,6 +26,14 @@ export default {
   watch: {
     wasCheckedAuthStatus (val) {
       if (val) {
+        if (this.$route.name === 'main') {
+          if (this.isSignedIn) {
+            this.$router.push({ name: 'dashboard' })
+          } else {
+            this.$router.push({ name: 'login' })
+          }
+        }
+
         this.authLoading = false
         this.checkAuth()
       }

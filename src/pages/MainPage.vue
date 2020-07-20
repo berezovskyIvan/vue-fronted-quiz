@@ -1,6 +1,5 @@
 <template lang="pug">
   .main-page
-    h1 Quizzes
 </template>
 
 <script>

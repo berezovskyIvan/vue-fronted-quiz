@@ -51,7 +51,7 @@ export default {
         authInfo.currentUser = currentUser
       }
 
-      const routeName = currentUser ? 'dashboard' : 'main'
+      const routeName = currentUser ? 'dashboard' : 'login'
       this.$store.dispatch('auth/updateCheckedStatus', true)
       this.$store.dispatch('auth/updateInfo', authInfo)
       this.$router.push({ name: routeName })
